@@ -3,20 +3,21 @@
 namespace App\Livewire\Cours;
 
 use Livewire\Component;
+use App\Models\Cours\Question;
 use App\Models\Cours\Evaluation;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Cours\Question as CoursQuestion;
 
-class Question extends Component
+class QuestionOuverte extends Component
 {
 
-    public CoursQuestion $question;
+    public Question $question;
     public Evaluation $evaluation;
+
     public string $questionText;
     public string $responseText = '';
     public int $questionPoint = 1;
 
-    public function mount(CoursQuestion $question,Evaluation $evaluation){
+    public function mount(Question $question,Evaluation $evaluation){
         $this->question = $question;
         $this->evaluation = $evaluation;
         $this->questionText = $question->text ?? '';
@@ -35,7 +36,7 @@ class Question extends Component
         
         
         if (!$this->question->exists){
-            $this->question = CoursQuestion::create([
+            $this->question = Question::create([
                 'text'=> $this->questionText,
                 'point'=>$this->questionPoint,
                 'user_id'=>Auth::user()->id,
@@ -67,6 +68,6 @@ class Question extends Component
 
     public function render()
     {
-        return view('livewire.cours.question');
+        return view('livewire.cours.question-ouverte');
     }
 }

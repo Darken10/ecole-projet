@@ -8,6 +8,7 @@ use App\Models\Cours\Evaluation;
 use App\Models\Cours\EvaluationsTraiter;
 use App\Models\Cours\Lesson;
 use App\Models\Cours\Response;
+use App\Models\Cours\Soumission;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -73,5 +74,9 @@ class User extends Authenticatable
 
     function evaluationsTraiter():HasMany{
         return $this->hasMany(EvaluationsTraiter::class);
+    }
+
+    function soumissions():HasMany{
+        return $this->hasMany(Soumission::class);
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\Classe\MatiereController;
 use App\Http\Controllers\Admin\Cours\AdminEvaluationController;
 use App\Http\Controllers\ClasseController;
+use App\Http\Controllers\Cours\EvaluationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,12 @@ Route::prefix('/prof')->middleware(['auth', 'verified'])->name('prof.')->group(f
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::middleware('auth')->group(function () {
+    Route::get('/evaluation/{evaluation}',[EvaluationController::class,'index'])->name('evaluation.index');
+    Route::post('/evaluation/{evaluation}',[EvaluationController::class,'correction'])->name('evaluation.correction');
+});
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -26,4 +26,17 @@ class Response extends Model
     public function questions():BelongsTo{
         return $this->belongsTo(Question::class);
     }
+
+    function corriger(){
+        if($this->question()->first()->type_question_id==1){
+            return $this->hasMany(Corriger::class)->one();
+        } elseif ($this->question()->first()->type_question_id==2) {
+            return $this->belongsToMany(Corriger::class);
+        } elseif ($this->question()->first()->type_question_id==3) {
+            return $this->hasMany(Corriger::class)->one();
+        }else {
+            return null;
+        }
+    }
+
 }

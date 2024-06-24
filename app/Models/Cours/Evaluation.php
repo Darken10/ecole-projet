@@ -6,11 +6,12 @@ use App\Models\User;
 use App\Models\Statut;
 use App\Models\Cours\Lesson;
 use App\Models\Cours\Question;
+use App\Models\Cours\Soumission;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Evaluation extends Model
 {
@@ -48,5 +49,9 @@ class Evaluation extends Model
 
     function evaluation_tratiter():BelongsToMany{
         return $this->belongsToMany(EvaluationsTraiter::class);
+    }
+
+    function soumissions():HasMany{
+        return $this->hasMany(Soumission::class);
     }
 }

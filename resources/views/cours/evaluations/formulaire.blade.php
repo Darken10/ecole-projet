@@ -133,7 +133,6 @@
                 </div>
             </x-shared.modale>   
                 
-            
             <x-shared.modale :btn="False" type="input" title="Modifier une Question" name="create-question-simple" >
                 <div class=" text-lg text-black">
                    @livewire('cours.question',['question'=>new App\Models\Cours\Question(),'evaluation'=>$evaluation], key(0))

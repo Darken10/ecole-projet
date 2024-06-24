@@ -114,7 +114,7 @@
                     @endphp
                     
                 @empty
-                    <x-aucun>Aucun Eleve n'est disponible</x-aucun>
+                    <x-aucun>Aucun Cours n'est disponible</x-aucun>
                 @endforelse
 
             </tbody>

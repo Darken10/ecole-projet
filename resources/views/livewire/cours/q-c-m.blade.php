@@ -19,14 +19,18 @@
             <x-text-input type="text" class="w-[80%]" wire:model="responsesTable.{{ $index }}.text" /> 
             <div class="flex gap-2 items-center">
                 <input type="checkbox" wire:model="responsesTable.{{ $index }}.isCorrect" >
-                <label for="isCorrect">Correcte</label>
-                <button wire:click="removeQcmResponse({{ $index }})">Supprimer</button>
+                {{-- <label for="isCorrect">Correcte</label> --}}
+                <button wire:click="removeQcmResponse({{ $index }})">
+                    <img src="{{ asset('icone/supprimer1.png') }}" class="w-8 h-8"  alt="">
+                </button>
             </div>
             <x-input-error :messages="$errors->get('responsesTable.{{ $index }}.text')" class="mt-2" />
         </div>
     @endforeach
     
-    <button wire:click="addQcmResponse"> + Ajouter Response</button>
+    <button wire:click="addQcmResponse"> 
+        <img src="{{ asset('icone/ajouter2.png') }}" class="w-8 h-8" alt="" srcset="">
+    </button>
 
 
     <div class="flex justify-between">

@@ -2,6 +2,7 @@
 
 namespace App\Models\Cours;
 
+use App\Models\Cours\Corriger;
 use App\Models\Cours\Response;
 use App\Models\Cours\Evaluation;
 use Illuminate\Database\Eloquent\Model;
@@ -33,5 +34,9 @@ class Question extends Model
 
     function evaluations():BelongsTo {
         return $this->belongsTo(Evaluation::class);
+    }
+    // La reponse traiter par l'utilisateur
+    function corriger(){
+        return $this->hasMany(Corriger::class);
     }
 }

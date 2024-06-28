@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\Classe\MatiereController;
 use App\Http\Controllers\Admin\Cours\AdminEvaluationController;
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\Cours\EvaluationController;
+use App\Http\Controllers\Cours\LessonController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,11 @@ Route::prefix('/prof')->middleware(['auth', 'verified'])->name('prof.')->group(f
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::prefix('/cours')->name('cours')->controller(LessonController::class)->group(function (){
+    Route::get('/','index')->name('index');
+});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/evaluation/{evaluation}',[EvaluationController::class,'index'])->name('evaluation.index');

@@ -13,6 +13,14 @@ class PieceJoint extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'url',
+        'type_piece_joint_id',
+        'create_at',
+        'updated_at',
+    ];
+
 
     function lessons():BelongsToMany{
         return $this->belongsToMany(Lesson::class);

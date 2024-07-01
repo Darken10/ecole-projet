@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('lesson_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId(User::class)->constrained()->cascadeOnDelete();
-            $table->foreignId(Lesson::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Lesson::class)->constrained()->cascadeOnDelete();
             $table->tinyInteger('apreciation')->nullable();
             $table->boolean('is_view')->default(True);
             $table->boolean('is_learned')->default(False);

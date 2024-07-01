@@ -65,7 +65,7 @@ class User extends Authenticatable
     }
 
     function lessonsCreated():HasMany{
-        return $this->hasMany(Lesson::class,'prof');
+        return $this->hasMany(Lesson::class);
     }
 
     function lessons():BelongsToMany{

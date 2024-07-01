@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('lesson_piece_joint', function (Blueprint $table) {
             $table->id();
-            $table->foreignId(PieceJoint::class)->constrained()->cascadeOnDelete();
-            $table->foreignId(Lesson::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(PieceJoint::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Lesson::class)->constrained()->cascadeOnDelete();
         });
     }
 

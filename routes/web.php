@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\Route;
 //Route::resource('/eleve',EleveController::class)->except(['show','edit','create'])->middleware('auth');
 
 // Administrateur 
-Route::prefix('/admin')->group(function () {
+/*Route::prefix('/admin')->group(function () {
     Route::resource('matiere',MatiereController::class);
     Route::resource('users',ClasseController::class);
 });
-
+*/
 //
 Route::prefix('/prof')->middleware(['auth', 'verified'])->name('prof.')->group(function () {
     Route::resource('evaluations',AdminEvaluationController::class)->except(['show','store','create']);
@@ -29,8 +29,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::prefix('/cours')->name('cours')->controller(LessonController::class)->group(function (){
+Route::prefix('/cours')->name('cours.')->controller(LessonController::class)->group(function (){
     Route::get('/','index')->name('index');
+    Route::get('/{lesson}','show')->name('show');
 });
 
 

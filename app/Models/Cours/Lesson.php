@@ -17,6 +17,12 @@ class Lesson extends Model
 {
     use HasFactory;
 
+
+
+    public function is_published():bool{
+        return $this->published_at<now();
+    }
+
     function evaluations():HasMany{
         return $this->hasMany(Evaluation::class);
     }
@@ -25,9 +31,14 @@ class Lesson extends Model
         return $this->belongsToMany(PieceJoint::class);
     }
 
-    function prof():BelongsTo{
-        return $this->belongsTo(User::class,'prof');
+    function user():BelongsTo{
+        return $this->belongsTo(User::class);
     }
+
+    function prof(){
+        return $this->user();
+    }
+
 
     function matiere():BelongsTo{
         return $this->belongsTo(Matiere::class);

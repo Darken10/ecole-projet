@@ -18,9 +18,14 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
+            $table->text('description');
+            $table->text('pre_requis')->nullable();
+            $table->text('plan');
+            //$table->text('contenu')->nullable();
             $table->longText('content');
+            $table->string('picture')->nullable();
             $table->foreignIdFor(Matiere::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(User::class,'prof')->constrained()->nullOnDelete();
+            $table->foreignIdFor(User::class)->constrained()->nullOnDelete();
             $table->foreignIdFor(Statut::class)->constrained();
             $table->dateTime('published_at')->default(now());
             $table->timestamps();

@@ -1,14 +1,17 @@
+@props(['matiere'])
 
 
 <section id="demos">
-    <div class="row">
-      <div class="large-12 columns">       
-        <div class="nonloop owl-carousel">
-          
-            @for ($i = 0; $i < 10; $i++)
-                <x-cours.accordeon-cours-item />
-            @endfor
-        </div>
+  <div class="row">
+    <div class="large-12 columns">       
+      <div class="nonloop owl-carousel">
+        @foreach ($matiere->lessons as $lesson)
+          @if ($lesson->is_published())
+            <x-cours.accordeon-cours-item :$lesson />
+          @endif
+        @endforeach
       </div>
     </div>
-  </section>
+  </div>
+</section>
+

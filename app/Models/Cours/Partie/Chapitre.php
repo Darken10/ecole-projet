@@ -17,7 +17,7 @@ class Chapitre extends Model
     protected $fillable = [
         'title',
         'matiere_id',
-        'partie_id'
+        'niveau_id'
     ];
     use HasFactory;
 

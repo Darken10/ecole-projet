@@ -79,4 +79,8 @@ class User extends Authenticatable
     function soumissions():HasMany{
         return $this->hasMany(Soumission::class);
     }
+
+    function contents():HasMany{
+        return $this->hasMany(User::class);
+    }
 }

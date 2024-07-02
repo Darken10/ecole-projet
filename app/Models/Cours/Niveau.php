@@ -3,6 +3,7 @@
 namespace App\Models\Cours;
 
 use App\Models\Cours\Partie\Chapitre;
+use App\Models\Cours\Partie\Content;
 use App\Models\Cours\Question;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -34,6 +35,10 @@ class Niveau extends Model
             }
         }
         return Collection::make($lessons);
+    }
+
+    function contents():HasMany{
+        return $this->hasMany(Content::class);
     }
 
 }

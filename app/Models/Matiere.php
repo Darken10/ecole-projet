@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Statut;
 use App\Models\Cours\Partie\Lesson;
 use App\Models\Admin\Classe\Classe;
+use App\Models\Cours\Partie\Content;
 use App\Models\Cours\Partie\Partie;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -38,5 +39,9 @@ class Matiere extends Model
 
     function parties():HasMany{
         return $this->hasMany(Partie::class);
+    }
+
+    function contents():HasMany{
+        return $this->hasMany(Content::class);
     }
 }

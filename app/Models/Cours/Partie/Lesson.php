@@ -26,7 +26,12 @@ class Lesson extends Model
         'title',
         'matiere_id',
         'chapitre_id',
-        'content_id',
+        'user_id',
+        'statut_id',
+        'lesson_numero',
+        'image_uri',
+        'created_at',
+        'updated_at'
     ];
 
     function chapitre():BelongsTo|null{
@@ -37,8 +42,8 @@ class Lesson extends Model
             return $this->belongsTo(Matiere::class);
     }
 
-    function content(){
-        return $this->belongsTo(Content::class);
+    function contents():HasMany{
+        return $this->hasMany(Content::class);
     }
 
 

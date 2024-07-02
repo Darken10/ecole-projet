@@ -25,8 +25,8 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained()->nullOnDelete();
             $table->foreignIdFor(Matiere::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Chapitre::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Content::class)->constrained()->nullOnDelete();
             $table->foreignIdFor(Statut::class)->constrained()->nullOnDelete();
+            $table->dateTime('published_at')->default(now());
             $table->timestamps();
         });
     }

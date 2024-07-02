@@ -22,6 +22,7 @@ use Filament\Infolists\Components\ImageEntry;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Prof\Resources\Cours\Partie\LessonResource\Pages;
 use App\Filament\Prof\Resources\Cours\Partie\LessonResource\RelationManagers;
+use App\Filament\Prof\Resources\LessonResource\RelationManagers\ContentsRelationManager;
 
 class LessonResource extends Resource
 {
@@ -192,7 +193,7 @@ class LessonResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ContentsRelationManager::class,
         ];
     }
 

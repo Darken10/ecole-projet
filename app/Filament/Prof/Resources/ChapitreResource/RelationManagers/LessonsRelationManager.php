@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Prof\Resources\MatiereResource\RelationManagers;
+namespace App\Filament\Prof\Resources\ChapitreResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -10,9 +10,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ChapitreRelationManager extends RelationManager
+class LessonsRelationManager extends RelationManager
 {
-    protected static string $relationship = 'Chapitre';
+    protected static string $relationship = 'lessons';
 
     public function form(Form $form): Form
     {

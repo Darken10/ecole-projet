@@ -2,16 +2,17 @@
 
 namespace App\Filament\Prof\Resources\Cours\Partie;
 
-use App\Filament\Prof\Resources\Cours\Partie\ChapitreResource\Pages;
-use App\Filament\Prof\Resources\Cours\Partie\ChapitreResource\RelationManagers;
-use App\Models\Cours\Partie\Chapitre;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use App\Models\Cours\Partie\Chapitre;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Prof\Resources\Cours\Partie\ChapitreResource\Pages;
+use App\Filament\Prof\Resources\Cours\Partie\ChapitreResource\RelationManagers;
+use App\Filament\Prof\Resources\ChapitreResource\RelationManagers\LessonsRelationManager;
 
 class ChapitreResource extends Resource
 {
@@ -87,7 +88,8 @@ class ChapitreResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            LessonsRelationManager::class,
+
         ];
     }
 

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('niveaux', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->tinyInteger('difficulty')->default(1)->min(0)->max(10);
+            $table->tinyInteger('difficulty',unsigned:True);
             $table->timestamps();
         });
     }

@@ -1,0 +1,41 @@
+<?php
+
+use App\Models\User;
+use App\Models\Matiere;
+use App\Models\Cours\Partie\Content;
+use App\Models\Cours\Partie\Chapitre;
+use App\Models\Cours\Partie\Objectif;
+use App\Models\Statut;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('lessons', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->tinyInteger('lesson_numero',unsigned:True)->default(1);
+            $table->string('image_uri')->nullable();
+            $table->foreignIdFor(User::class)->constrained()->nullOnDelete();
+            $table->foreignIdFor(Matiere::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Chapitre::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Content::class)->constrained()->nullOnDelete();
+            $table->foreignIdFor(Statut::class)->constrained()->nullOnDelete();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('lessons');
+    }
+};

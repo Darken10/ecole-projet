@@ -4,7 +4,7 @@ namespace App\Models\Cours;
 
 use App\Models\User;
 use App\Models\Statut;
-use App\Models\Cours\Lesson;
+use App\Models\Cours\Partie\Lesson;
 use App\Models\Cours\Question;
 use App\Models\Cours\Soumission;
 use Illuminate\Database\Eloquent\Model;
@@ -32,7 +32,11 @@ class Evaluation extends Model
     ];
 
     function userCreated():BelongsTo{
-        return $this->belongsTo(User::class,'prof');
+        return $this->belongsTo(User::class);
+    }
+
+    function prof(){
+        return $this->user_error();
     }
 
     function statut():BelongsTo{

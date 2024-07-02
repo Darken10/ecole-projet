@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Cours;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cours\EvaluationFormResquest;
 use App\Models\Cours\Evaluation as CoursEvaluation;
-use App\Models\Cours\Lesson;
+use App\Models\Cours\Partie\Lesson;
 use Illuminate\Support\Facades\Auth;
 
 class AdminEvaluationController extends Controller

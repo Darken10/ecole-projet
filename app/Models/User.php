@@ -4,16 +4,16 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use App\Models\Cours\Evaluation;
-use App\Models\Cours\EvaluationsTraiter;
-use App\Models\Cours\Lesson;
 use App\Models\Cours\Response;
+use App\Models\Cours\Evaluation;
 use App\Models\Cours\Soumission;
+use App\Models\Cours\Partie\Lesson;
+use App\Models\Cours\EvaluationsTraiter;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -61,7 +61,7 @@ class User extends Authenticatable
     }
 
     function evaluationsCreated():HasMany{
-        return $this->hasMany(Evaluation::class,'prof');
+        return $this->hasMany(Evaluation::class);
     }
 
     function lessonsCreated():HasMany{

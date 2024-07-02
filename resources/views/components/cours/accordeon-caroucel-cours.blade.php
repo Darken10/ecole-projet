@@ -1,6 +1,5 @@
 @props(['matiere'])
 
-
 <section id="demos">
   <div class="row">
     <div class="large-12 columns">       

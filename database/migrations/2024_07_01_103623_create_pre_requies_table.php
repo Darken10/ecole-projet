@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\Cours\Partie\Chapitre;
 use App\Models\Cours\Partie\Lesson;
 use App\Models\Cours\Partie\PreRequie;
+use App\Models\Matiere;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +20,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('liens')->nullable();
+            $table->foreignIdFor(Lesson::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
 

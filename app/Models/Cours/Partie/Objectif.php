@@ -16,9 +16,13 @@ class Objectif extends Model
         'title',
         'description',
         'lesson_id',
+        'chapitre_id',
+        'matiere_id',
     ];
 
-    function lessons():BelongsTo{
+    function lesson():BelongsTo{
         return $this->belongsTo(Lesson::class);
     }
+
+    
 }

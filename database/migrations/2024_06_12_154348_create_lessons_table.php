@@ -23,7 +23,6 @@ return new class extends Migration
             $table->tinyInteger('lesson_numero',unsigned:True)->default(1);
             $table->string('image_uri')->nullable();
             $table->foreignIdFor(User::class)->constrained()->nullOnDelete();
-            $table->foreignIdFor(Matiere::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Chapitre::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Statut::class)->constrained()->nullOnDelete();
             $table->dateTime('published_at')->default(now());

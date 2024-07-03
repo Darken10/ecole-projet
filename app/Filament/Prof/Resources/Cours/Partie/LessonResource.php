@@ -20,9 +20,12 @@ use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Resources\RelationManagers\RelationGroup;
 use App\Filament\Prof\Resources\Cours\Partie\LessonResource\Pages;
 use App\Filament\Prof\Resources\Cours\Partie\LessonResource\RelationManagers;
 use App\Filament\Prof\Resources\LessonResource\RelationManagers\ContentsRelationManager;
+use App\Filament\Prof\Resources\LessonResource\RelationManagers\ObjectifsRelationManager;
+use App\Filament\Prof\Resources\LessonResource\RelationManagers\PreRequiesRelationManager;
 
 class LessonResource extends Resource
 {
@@ -106,11 +109,11 @@ class LessonResource extends Resource
                     ->label('Leçon')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\ImageColumn::make('image_uri')
-                    ->label('Image'),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Titre')
                     ->searchable(),
+                Tables\Columns\ImageColumn::make('image_uri')
+                    ->label('Image'),
                 Tables\Columns\TextColumn::make('matiere.name')
                     ->label('Matière')
                     ->numeric()
@@ -193,7 +196,10 @@ class LessonResource extends Resource
     public static function getRelations(): array
     {
         return [
+            
             ContentsRelationManager::class,
+            ObjectifsRelationManager::class,
+            PreRequiesRelationManager::class,
         ];
     }
 

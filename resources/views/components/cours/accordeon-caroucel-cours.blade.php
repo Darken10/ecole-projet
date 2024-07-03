@@ -4,9 +4,9 @@
   <div class="row">
     <div class="large-12 columns">       
       <div class="nonloop owl-carousel">
-        @foreach ($matiere->lessons as $lesson)
-          @if ($lesson->is_published())
-            <x-cours.accordeon-cours-item :$lesson />
+        @foreach ($matiere->chapitres as $chapitre)
+          @if ($chapitre->has_lessons_published())
+            <x-cours.accordeon-cours-item :$chapitre />
           @endif
         @endforeach
       </div>

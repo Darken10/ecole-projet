@@ -31,56 +31,70 @@ class Lesson extends Model
         'lesson_numero',
         'image_uri',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'published_at',
     ];
 
-    function chapitre():BelongsTo|null{
+    function chapitre(): BelongsTo|null
+    {
         return $this->belongsTo(Chapitre::class);
     }
 
-    function matiere():BelongsTo|null{
-            return $this->belongsTo(Matiere::class);
+    function matiere(): BelongsTo|null
+    {
+        return $this->belongsTo(Matiere::class);
     }
 
-    function contents():HasMany{
+    function contents(): HasMany
+    {
         return $this->hasMany(Content::class);
     }
 
 
-    function pre_requies():HasMany{
+    function pre_requies(): HasMany
+    {
         return $this->hasMany(PreRequie::class);
     }
 
-    function objectifs():HasMany{
+    function objectifs(): HasMany
+    {
         return $this->hasMany(Objectif::class);
     }
 
-
-    public function is_published():bool{
-        return $this->published_at < now();
-    }
-
-    function evaluations():HasMany{
+    function evaluations(): HasMany
+    {
         return $this->hasMany(Evaluation::class);
     }
 
-    function user():BelongsTo{
+    function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
-    function prof(){
+    function prof()
+    {
         return $this->user();
     }
 
-    function statut():BelongsTo{
+    function statut(): BelongsTo
+    {
         return $this->belongsTo(Statut::class);
     }
 
-    function users():BelongsToMany{
-        return $this->belongsToMany(User::class)->withPivot(['apreciation','is_view','is_learned','created_at','updated_at']);
-    } 
+    function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class)->withPivot(['apreciation', 'is_view', 'is_learned', 'created_at', 'updated_at']);
+    }
 
-    function eleves():BelongsToMany{
+    function eleves(): BelongsToMany
+    {
         return $this->users();
+    }
+
+    /****************************** */
+
+    public function is_published(): bool
+    {
+        return $this->published_at < now();
     }
 }

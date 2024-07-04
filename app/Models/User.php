@@ -9,6 +9,7 @@ use App\Models\Cours\Evaluation;
 use App\Models\Cours\Soumission;
 use App\Models\Cours\Partie\Lesson;
 use App\Models\Cours\EvaluationsTraiter;
+use App\Models\Cours\Partie\Content;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -82,5 +83,9 @@ class User extends Authenticatable
 
     function contents():HasMany{
         return $this->hasMany(User::class);
+    }
+
+    function sections():BelongsToMany{
+        return $this->belongsToMany(Content::class);
     }
 }

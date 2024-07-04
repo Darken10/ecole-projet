@@ -97,4 +97,33 @@ class Lesson extends Model
     {
         return $this->published_at < now();
     }
+
+    public function addView(){
+        if (!$this->users()->where('user_id',auth()->user()->id)->exists())
+            return $this->users()->attach(auth()->user()->id,['apreciation'=>0, 'is_view'=>True, 'is_learned'=>false]);
+        return $this;
+    }
+
+    public function addFollower(){
+        if (!$this->users()->where('user_id',auth()->user()->id)->exists())
+            return $this->users()->attach(auth()->user()->id,['apreciation'=>0, 'is_view'=>True, 'is_learned'=>True]);
+        //dd($this->users()->where('user_id',auth()->user()->id)->get()->last());
+        $pivot = $this->users()->where('user_id',auth()->user()->id)->get()->last()->pivot;
+        $pivot->is_learned=1;
+        $this->save();
+        $pivot->save();
+        //$this->users()->where('user_id',auth()->user()->id)->get()->last()->pivot->save();
+        return  True;
+
+    }
+
+    public function addApreciation($appreciation){
+        if (!$this->users()->where('user_id',auth()->user()->id)->exists())
+            return $this->users()->attach(auth()->user()->id,['apreciation'=>0, 'is_view'=>True, 'is_learned'=>True]);
+        $this->users()->where('user_id',auth()->user()->id)->pivot->apreciation=$appreciation;
+        $this->save();
+        $this->users()->where('user_id',auth()->user()->id)->pivot->save();
+        return  True;
+
+    }
 }

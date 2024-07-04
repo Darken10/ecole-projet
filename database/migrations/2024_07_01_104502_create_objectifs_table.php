@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Matiere;
+use App\Models\Cours\Niveau;
 use App\Models\Cours\Partie\Lesson;
 use App\Models\Cours\Partie\Chapitre;
 use App\Models\Cours\Partie\Objectif;

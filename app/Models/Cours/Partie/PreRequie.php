@@ -19,9 +19,6 @@ class PreRequie extends Model
         'title',
         'description',
         'lesson_id',
-        'lesson_id',
-        'chapitre_id',
-        'matiere_id',
     ];
 
     function lesson():BelongsTo{

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Cours\Niveau;
+use App\Models\Cours\Partie\Chapitre;
 use App\Models\Cours\Partie\Lesson;
 use App\Models\Cours\PieceJoint;
 use App\Models\Matiere;
@@ -18,9 +19,11 @@ return new class extends Migration
     {
         Schema::create('contents', function (Blueprint $table) {
             $table->id();
+            $table->tinyInteger('numero_section',unsigned:True)->default(1);
             $table->string('section_title')->nullable();
             $table->longText('content');
             $table->foreignIdFor(Lesson::class)->constrained()->cascadeOnDelete();
+
             $table->foreignIdFor(User::class)->constrained()->restrictOnDelete();
             $table->timestamps();
         });

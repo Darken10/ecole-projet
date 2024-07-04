@@ -31,12 +31,16 @@ class Evaluation extends Model
         'lesson_id',
     ];
 
-    function userCreated():BelongsTo{
+    function userCreated(){
+        return $this->user();
+    }
+
+    function user():BelongsTo{
         return $this->belongsTo(User::class);
     }
 
     function prof(){
-        return $this->user_error();
+        return $this->user();
     }
 
     function statut():BelongsTo{

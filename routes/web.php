@@ -32,6 +32,9 @@ Route::get('/', function () {
 Route::prefix('/cours')->name('cours.')->controller(LessonController::class)->group(function (){
     Route::get('/','index')->name('index');
     Route::get('/{lesson}','show')->name('show');
+    Route::get('/{lesson}/suivre','suivre')->name('suivre');
+    Route::get('/{lesson}/{content}/{numero}/suivre','sectionSuivante')->name('sectionSuivante');
+    Route::get('/{lesson}/{content}/{numero}/arriere','sectionArriere')->name('sectionArriere');
 });
 
 

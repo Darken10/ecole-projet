@@ -9,6 +9,7 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\Cours\Niveau;
 use Filament\Resources\Resource;
 use Illuminate\Support\Collection;
 use App\Models\Cours\Partie\Lesson;
@@ -19,6 +20,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Prof\Resources\Cours\Partie\PreRequieResource\Pages;
 use App\Filament\Prof\Resources\Cours\Partie\PreRequieResource\RelationManagers;
+use App\Filament\Prof\Resources\LessonResource\RelationManagers\PreRequiesRelationManager;
 
 class PreRequieResource extends Resource
 {
@@ -38,13 +40,22 @@ class PreRequieResource extends Resource
                     wizard\Step::make("Leçon")
                         ->description("Information de la leçon")
                         ->schema([
+                            Forms\Components\Select::make('niveau_id')
+                                ->options(Niveau::all()->pluck('name', 'id'))
+                                ->label('Niveau')
+                                ->preload()
+                                ->searchable()
+                                ->native(False)
+                                ->hiddenOn(PreRequiesRelationManager::class)
+                                ->required(),
                             Forms\Components\Select::make('matiere_id')
-                            ->options(Matiere::all()->pluck('name','id'))
+                                ->options(Matiere::all()->pluck('name', 'id'))
                                 ->afterStateUpdated(fn (Set $set) => $set('chapitre_id', null))
                                 ->live()
                                 ->native(False)
                                 ->preload()
                                 ->searchable()
+                                ->hiddenOn(PreRequiesRelationManager::class)
                                 ->required(),
                             Forms\Components\Select::make('chapitre_id')
                                 ->options(fn (Get $get): Collection => Chapitre::query()->where('matiere_id', $get('matiere_id'))->get()->pluck('title', 'id'))
@@ -52,19 +63,20 @@ class PreRequieResource extends Resource
                                 ->native(False)
                                 ->preload()
                                 ->searchable()
+                                ->hiddenOn(PreRequiesRelationManager::class)
                                 ->required(),
                             Forms\Components\Select::make('lesson_id')
                                 ->options(fn (Get $get): Collection => Lesson::query()->where('chapitre_id', $get('chapitre_id'))->get()->pluck('title', 'id'))
                                 ->native(False)
                                 ->preload()
                                 ->searchable()
-                                ->required()
-                                ->columnSpanFull(),
+                                ->hiddenOn(PreRequiesRelationManager::class)
+                                ->required(),
 
-                        ])->columns(2),
+                        ])->hiddenOn(PreRequiesRelationManager::class)->columns(2),
 
-                    wizard\Step::make("Objectif")
-                        ->description("Information de l'Objectif")
+                    wizard\Step::make("Pre-Requits")
+                        ->description("Information de Pre Requit")
                         ->schema([
                             Forms\Components\TextInput::make('title')
                                 ->required(),

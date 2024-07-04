@@ -12,16 +12,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Content extends Model
 {
 
     protected $fillable = [
         'content',
+        'numero_section',
         'section_title',
-        'matiere_id',
+        
         'lesson_id',
-        'niveau_id',
+        
         'user_id'
     ];
 
@@ -37,7 +39,7 @@ class Content extends Model
         return $this->belongsTo(Lesson::class);
     }
 
-    function matiere(): BelongsTo
+    /*function matiere(): BelongsTo
     {
         return $this->belongsTo(Matiere::class);
     }
@@ -45,10 +47,15 @@ class Content extends Model
     function niveau(): BelongsTo
     {
         return $this->belongsTo(Niveau::class);
-    }
+    }*/
 
     function user():BelongsTo{
         return $this->belongsTo(User::class);
     }
+
+    function users():BelongsToMany{
+        return $this->belongsToMany(User::class);
+    }
+
 
 }

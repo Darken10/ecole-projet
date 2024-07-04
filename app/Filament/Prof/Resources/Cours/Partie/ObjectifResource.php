@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Prof\Resources\Cours\Partie\ObjectifResource\Pages;
 use App\Filament\Prof\Resources\Cours\Partie\ObjectifResource\RelationManagers;
+use App\Filament\Prof\Resources\LessonResource\RelationManagers\ObjectifsRelationManager;
 
 class ObjectifResource extends Resource
 {
@@ -44,6 +45,7 @@ class ObjectifResource extends Resource
                                 ->native(False)
                                 ->preload()
                                 ->searchable()
+                                ->hiddenOn(ObjectifsRelationManager::class)
                                 ->required(),
                             Forms\Components\Select::make('chapitre_id')
                                 ->options(fn (Get $get):Collection => Chapitre::query()->where('matiere_id',$get('matiere_id'))->get()->pluck('title','id'))
@@ -52,6 +54,7 @@ class ObjectifResource extends Resource
                                 ->native(False)
                                 ->preload()
                                 ->searchable()
+                                ->hiddenOn(ObjectifsRelationManager::class)
                                 ->required(),
                             Forms\Components\Select::make('lesson_id')
                                 ->options(fn (Get $get):Collection => Lesson::query()->where('chapitre_id',$get('chapitre_id'))->get()->pluck('title','id'))
@@ -59,9 +62,10 @@ class ObjectifResource extends Resource
                                 ->preload()
                                 ->searchable()
                                 ->required()
+                                ->hiddenOn(ObjectifsRelationManager::class)
                                 ->columnSpanFull(),
 
-                        ])->columns(2),
+                        ])->hiddenOn(ObjectifsRelationManager::class)->columns(2),
 
                     wizard\Step::make("Objectif")
                         ->description("Information de l'Objectif")

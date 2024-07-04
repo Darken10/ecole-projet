@@ -16,8 +16,6 @@ class Objectif extends Model
         'title',
         'description',
         'lesson_id',
-        'chapitre_id',
-        'matiere_id',
     ];
 
     function lesson():BelongsTo{

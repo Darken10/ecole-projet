@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('section_title')->nullable();
             $table->longText('content');
             $table->foreignIdFor(Lesson::class)->constrained()->cascadeOnDelete();
-
             $table->foreignIdFor(User::class)->constrained()->restrictOnDelete();
             $table->timestamps();
         });

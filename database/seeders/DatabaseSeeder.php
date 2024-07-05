@@ -7,10 +7,13 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Database\Seeders\ClasseSeeder;
+use Database\Seeders\LessonSeeder;
 use Database\Seeders\NiveauSeeder;
 use Database\Seeders\StatutSeeder;
 use Database\Seeders\MatiereSeeder;
+use Database\Seeders\ChapitreSeeder;
 use Illuminate\Support\Facades\Hash;
+use Database\Seeders\TypeQuestionSeeder;
 use Database\Seeders\TypePieceJointSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,8 +26,8 @@ class DatabaseSeeder extends Seeder
         //User::factory(10)->create();
 
         User::create([
-            'name'=>'Darken',
-            'email'=>'darken@darken.com',
+            'name' => 'Darken',
+            'email' => 'darken@darken.com',
             'email_verified_at' => now(),
             'password' =>  Hash::make('password'),
             'remember_token' => Str::random(10),
@@ -36,9 +39,9 @@ class DatabaseSeeder extends Seeder
             MatiereSeeder::class,
             TypePieceJointSeeder::class,
             NiveauSeeder::class,
-            
+            TypeQuestionSeeder::class,
+            ChapitreSeeder::class,
+            LessonSeeder::class,
         ]);
-
-        
     }
 }

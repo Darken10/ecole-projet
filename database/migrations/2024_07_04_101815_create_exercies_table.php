@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\Statut;
+use App\Models\Cours\Partie\Content;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -11,8 +13,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('exercies', function (Blueprint $table) {
+        Schema::create('exercices', function (Blueprint $table) {
             $table->id();
+            $table->string('title')->nullable();
+            $table->text('description')->nullable();
+            $table->json('questions')->nullable();
+            $table->foreignIdFor(Content::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Statut::class)->constrained()->restrictOnDelete();
             $table->timestamps();
         });
     }
@@ -22,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('exercies');
+        Schema::dropIfExists('exercices');
     }
 };

@@ -4,9 +4,10 @@ namespace App\Models\Cours;
 
 use App\Models\User;
 use App\Models\Statut;
-use App\Models\Cours\Partie\Lesson;
 use App\Models\Cours\Question;
 use App\Models\Cours\Soumission;
+use Illuminate\Support\Collection;
+use App\Models\Cours\Partie\Lesson;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -61,5 +62,9 @@ class Evaluation extends Model
 
     function soumissions():HasMany{
         return $this->hasMany(Soumission::class);
+    }
+
+    static function all_evaluations():Collection{
+        return Evaluation::query()->where('user_id',auth()->user()->id)->get();
     }
 }

@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Cours\Exercice;
 use App\Models\Cours\Evaluation;
 use App\Models\Cours\Partie\Lesson;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Statut extends Model
 {
@@ -24,4 +25,7 @@ class Statut extends Model
         return $this->hasMany(Lesson::class);
     }
 
+    function exercices():HasMany{
+        return $this->hasMany(Exercice::class);
+    }
 }

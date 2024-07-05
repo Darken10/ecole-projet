@@ -19,7 +19,8 @@ return new class extends Migration
             $table->id();
             $table->string('text');
             $table->tinyInteger('point')->default(1);
-            $table->foreignIdFor(TypeQuestion::class)->default(1)->constrained()->restrictOnDelete();
+            $table->json('options');
+            $table->foreignIdFor(TypeQuestion::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Evaluation::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->timestamps();

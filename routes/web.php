@@ -6,6 +6,9 @@ use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\Cours\EvaluationController;
 use App\Http\Controllers\Cours\LessonController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Cours\Evaluation;
+use App\Models\Cours\Exercice;
+use App\Models\Cours\Question;
 use Illuminate\Support\Facades\Route;
 
 
@@ -35,6 +38,12 @@ Route::prefix('/cours')->name('cours.')->controller(LessonController::class)->gr
     Route::get('/{lesson}/suivre','suivre')->name('suivre');
     Route::get('/{lesson}/{content}/{numero}/suivre','sectionSuivante')->name('sectionSuivante');
     Route::get('/{lesson}/{content}/{numero}/arriere','sectionArriere')->name('sectionArriere');
+});
+
+Route::get('/test',function(){
+    $question = Question::find(2);
+    $exo = Exercice::find(1);
+    dd($exo->questions);
 });
 
 

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Statut;
 use App\Models\Matiere;
 use App\Models\Cours\Evaluation;
+use Illuminate\Support\Collection;
 use App\Models\Cours\Partie\Content;
 use App\Models\Cours\Partie\Chapitre;
 use App\Models\Cours\Partie\Objectif;
@@ -91,7 +92,11 @@ class Lesson extends Model
         return $this->users();
     }
 
-    /****************************** */
+    static function all_lessons():Collection{
+        return Lesson::query()->where('user_id',auth()->user()->id)->get();
+    }
+
+    /************************************************************************************* */
 
     public function is_published(): bool
     {

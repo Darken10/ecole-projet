@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Matiere;
 
 use App\Models\Cours\Niveau;
+use App\Models\Cours\Exercice;
 use App\Models\Cours\PieceJoint;
 use App\Models\Cours\Partie\Lesson;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Collection;
 
 class Content extends Model
 {
@@ -21,9 +23,7 @@ class Content extends Model
         'content',
         'numero_section',
         'section_title',
-        
         'lesson_id',
-        
         'user_id'
     ];
 
@@ -57,5 +57,17 @@ class Content extends Model
         return $this->belongsToMany(User::class);
     }
 
+    function exercices():HasMany{
+        return $this->hasMany(Exercice::class);
+    }
+
+    static function all_contents():Collection{
+        $contents = [];
+        foreach (Lesson::all_lessons() as $key => $value) {
+            # code...
+        }
+
+        return Collection::make($contents);
+    }
 
 }

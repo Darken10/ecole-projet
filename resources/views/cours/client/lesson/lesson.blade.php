@@ -10,7 +10,10 @@
     </div>
     
     <div class="my-8 border-t-2 py-4">
-        Exercices
+        @foreach ($content->exercices as $exo)
+            @livewire('cours.exercice',['exercice'=>$exo,'i'=>$loop->index],key($exo->id))
+        @endforeach
+
     </div>
 
     <div class="flex justify-between">

@@ -3,8 +3,9 @@
 @section('title',"Esi-School | {$lesson->title}")
 
 @section('content')
+@if($content!=null)
 <div class=" mt-8 my-4 bg-white p-4 rounded-md shadow-sm ">
-    <h3 class=" text-2xl font-semibold">Section {{ $content->numero_section }} : {{ $content->section_title }}</h3>
+    <h3 class=" text-2xl font-semibold">Section {{ $content?->numero_section }} : {{ $content?->section_title }}</h3>
     <div>
         {!! $content->content !!}
     </div>
@@ -51,5 +52,7 @@
         </form>
     </div>
 </div>
-
+@else
+<x-aucun>Aucun Contenu</x-aucun>
+@endif
 @endsection

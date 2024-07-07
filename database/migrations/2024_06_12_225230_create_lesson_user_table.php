@@ -20,6 +20,7 @@ return new class extends Migration
             $table->tinyInteger('apreciation')->nullable();
             $table->boolean('is_view')->default(True);
             $table->boolean('is_learned')->default(False);
+            $table->boolean('is_like')->default(False);
             $table->timestamps();
         });
     }

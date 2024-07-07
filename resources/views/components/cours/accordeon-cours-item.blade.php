@@ -19,7 +19,7 @@
             </p>
         </div>
         
-            <x-shared.rating appreciation='3' />
+            <x-shared.rating :appreciation="$lesson->apreciation() ?? 0" />
 
         <div class="flex items-center justify-between">
             <span class="text-xl sm:text-xs font-bold text-gray-900 dark:text-white">$599</span>

@@ -110,30 +110,51 @@ class Lesson extends Model
 
     public function addView(){
         if (!$this->users()->where('user_id',auth()->user()->id)->exists())
-            return $this->users()->attach(auth()->user()->id,['apreciation'=>0, 'is_view'=>True, 'is_learned'=>false]);
+            return $this->users()->attach(auth()->user()->id,['apreciation'=>0, 'is_view'=>True, 'is_learned'=>false,'is_like'=>false]);
         return $this;
     }
 
     public function addFollower(){
         if (!$this->users()->where('user_id',auth()->user()->id)->exists())
-            return $this->users()->attach(auth()->user()->id,['apreciation'=>0, 'is_view'=>True, 'is_learned'=>True]);
-        //dd($this->users()->where('user_id',auth()->user()->id)->get()->last());
+            return $this->users()->attach(auth()->user()->id,['apreciation'=>0, 'is_view'=>True, 'is_learned'=>True,'is_like'=>false]);
         $pivot = $this->users()->where('user_id',auth()->user()->id)->get()->last()->pivot;
         $pivot->is_learned=1;
         $this->save();
         $pivot->save();
-        //$this->users()->where('user_id',auth()->user()->id)->get()->last()->pivot->save();
         return  True;
 
     }
 
     public function addApreciation($appreciation){
         if (!$this->users()->where('user_id',auth()->user()->id)->exists())
-            return $this->users()->attach(auth()->user()->id,['apreciation'=>0, 'is_view'=>True, 'is_learned'=>True]);
+            return $this->users()->attach(auth()->user()->id,['apreciation'=>0, 'is_view'=>True, 'is_learned'=>True,'is_like'=>false]);
         $this->users()->where('user_id',auth()->user()->id)->pivot->apreciation=$appreciation;
         $this->save();
         $this->users()->where('user_id',auth()->user()->id)->pivot->save();
         return  True;
 
+    }
+
+    public function count_views():int {
+        return count($this->users);
+    }
+
+    public function count_likes():int{
+        
+        return count($this->users()->wherePivot('is_like',true)->get());
+    }
+
+    public function count_followers():int{
+        
+        return count($this->users()->wherePivot('is_learned',true)->get());
+    }
+
+    public function apreciation():float{
+        $all_apreciation = $this->users()->wherePivot('apreciation','>',0)->withPivot('apreciation')->get();
+        $n = 0;
+        foreach ($all_apreciation as  $value) {
+            $n += $value->pivot->apreciation;
+        }
+        return count($all_apreciation)>0 ? $n/count($all_apreciation) : 0;
     }
 }

@@ -15,7 +15,7 @@
                 <x-cours.card-prof-profile :user="$lesson->prof"/>
             </div>
             <div>
-                <x-cours.cours-statistique />
+                <x-cours.cours-statistique :$lesson />
             </div>
         </div>
         {{--<div class=" grid lg:grid-cols-2 md:grid-cols-1 items-center">

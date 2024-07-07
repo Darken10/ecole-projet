@@ -3,6 +3,7 @@
 use App\Models\Cours\Exercice;
 use App\Models\Cours\Question;
 use App\Models\Cours\Evaluation;
+use App\Models\Cours\Partie\Lesson;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\ProfileController;
@@ -10,7 +11,6 @@ use App\Http\Controllers\Cours\LessonController;
 use App\Http\Controllers\Cours\EvaluationController;
 use App\Http\Controllers\Admin\Classe\MatiereController;
 use App\Http\Controllers\Admin\Cours\AdminEvaluationController;
-
 
 //Route::resource('/eleve',EleveController::class)->except(['show','edit','create'])->middleware('auth');
 
@@ -43,9 +43,8 @@ Route::prefix('/cours')->name('cours.')->controller(LessonController::class)->gr
 });
 
 Route::get('/test',function(){
-    $question = Question::find(2);
-    $exo = Exercice::find(1);
-    dd($exo->questions);
+    $lesson  = Lesson::find(3);
+    //dd();
 });
 
 

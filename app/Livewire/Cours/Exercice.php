@@ -3,6 +3,7 @@
 namespace App\Livewire\Cours;
 
 use Livewire\Component;
+use Illuminate\Http\Request;
 use App\Models\Cours\Exercice as CoursExercice;
 
 class Exercice extends Component
@@ -22,16 +23,20 @@ class Exercice extends Component
         $this->is_open = !$this->is_open;
     }
 
-    function correction(){
-        if(count($this->user_responses))
-            dd($this->user_responses);
-        else
-            dd("Rien",$this->user_responses);
+    function correction(Request $request){
+        //dd('corriger');
+        $res = $request->input();
+        dd($res);
+        
 
     }
 
     function corrigeQcmSimple(){
-        
+        foreach ($this->exercice->questions as $key => $value) {
+            if(array_key_exists($key,$this->user_responses)){
+                dd($this->user_responses);
+            }
+        }
     } 
 
     public function render()

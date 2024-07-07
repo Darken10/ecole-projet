@@ -26,6 +26,8 @@ use App\Filament\Prof\Resources\Cours\Partie\LessonResource\RelationManagers;
 use App\Filament\Prof\Resources\LessonResource\RelationManagers\ContentsRelationManager;
 use App\Filament\Prof\Resources\LessonResource\RelationManagers\ObjectifsRelationManager;
 use App\Filament\Prof\Resources\LessonResource\RelationManagers\PreRequiesRelationManager;
+use App\Filament\Prof\Resources\LessonResource\RelationManagers\UserQuestionsRelationManager;
+use App\Filament\Prof\Resources\LessonResource\RelationManagers\UserQuestionResponsesRelationManager;
 
 class LessonResource extends Resource
 {
@@ -200,6 +202,8 @@ class LessonResource extends Resource
             ContentsRelationManager::class,
             ObjectifsRelationManager::class,
             PreRequiesRelationManager::class,
+            UserQuestionsRelationManager::class
+            //UserQuestionResponsesRelationManager::class,
         ];
     }
 

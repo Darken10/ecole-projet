@@ -2,6 +2,7 @@
 
 namespace App\Models\Cours;
 
+use App\Models\User;
 use App\Models\Statut;
 use App\Models\Cours\Question;
 use App\Models\Cours\Partie\Content;
@@ -39,5 +40,9 @@ class Exercice extends Model
 
     function questions():BelongsToMany{
         return $this->belongsToMany(Question::class);
+    }
+
+    function users():BelongsToMany{
+        return $this->belongsToMany(User::class)->withPivot(['note','note_max','response','created_at','updated_at']);
     }
 }

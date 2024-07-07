@@ -14,6 +14,7 @@ use App\Models\Cours\Partie\BigLetter;
 use App\Models\Cours\Partie\BigNumber;
 use App\Models\Cours\Partie\PreRequie;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Cours\Partie\UserQuestion;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -94,6 +95,10 @@ class Lesson extends Model
 
     static function all_lessons():Collection{
         return Lesson::query()->where('user_id',auth()->user()->id)->get();
+    }
+
+    function user_questions():HasMany{
+        return $this->hasMany(UserQuestion::class);
     }
 
     /************************************************************************************* */

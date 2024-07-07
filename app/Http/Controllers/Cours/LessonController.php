@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Cours;
 
+use Exception;
 use App\Models\Matiere;
 use Illuminate\Http\Request;
+use App\Helpers\TypeQuestion;
+use App\Models\Cours\Exercice;
 use App\Models\Cours\Partie\Lesson;
 use App\Http\Controllers\Controller;
 use App\Models\Cours\Partie\Content;
+use App\Models\Cours\Partie\UserQuestion;
 
 class LessonController extends Controller
 {
@@ -62,6 +66,93 @@ class LessonController extends Controller
         ]);
     }
 
+    function user_question(Request $request,Lesson $lesson){
+        $data = $request->validate([
+            'question'=>['required','string','min:2']
+        ]);
+        $data['lesson_id']= $lesson->id;
+        $data['user_id']= auth()->user()->id;
+        try {
+            $userQuestion = UserQuestion::create($data);
+        } catch (Exception $e) {
+            throw $e;
+        }
+        if ($userQuestion) {
+            return back()->with('success','votre question et bien ete envoyer');
+        }
+        return back()->with('error','Une erreur est survenue');
 
+
+    }
+
+    function exercice_corretion(Request $request,Exercice $exercice){
+        $data = $request->input();
+        $note = 0;
+        $note_total = 0;
+        foreach ($exercice->questions as $question_index => $question) {
+            $type = (\App\Helpers\TypeQuestion::typeQuestion($question));
+            switch (\App\Helpers\TypeQuestion::typeQuestion($question)) {
+                case 1 :
+                    
+                    foreach ($question['options'] as $option_index => $option) {
+                        if($option['is_correct']){
+                            $note_total++;
+                            if(array_key_exists("question_{$question_index}",$data) ){
+                                if($option['response_text']==$data["question_{$question_index}"]){
+                                    $note ++;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 2 :
+                    foreach ($question['options'] as $option_index => $option) {
+                        
+                        if($option['is_correct']){
+                            $note_total++;
+                            //dd($option_index,$data["question_{$question_index}"]);
+                            if(array_key_exists("$option_index",$data["question_{$question_index}"])){
+                                $note++;
+                            }
+                            if($option['response_text']==$data["question_{$question_index}"]){
+                                $note ++;
+                            }
+                        }
+                        else{
+                            if(array_key_exists("$option_index",$data["question_{$question_index}"])){
+                                $note --;
+                            }
+                        }                        
+                    }
+                    break;
+                case 3 :
+                    if($question['options'][0]['is_correct']){
+                        $note_total ++;
+                        if(trim(strtolower($data["question_{$question_index}"]))==trim(strtolower($question['options'][0]['response_text']))){
+                            $note++;
+                        }
+                    }
+                    break;
+            
+            }
+        }
+        
+        $exercice->users()->attach(auth()->user()->id,[
+            'note'=>$note,
+            'response'=> json_encode($data),
+            'note_max'=> $note_total,
+        ]);
+
+        return view('cours.client.lesson.corriger-exercice',[
+            'exercice'=>$exercice,
+            'data'=>$data,
+            'note'=>$note,
+            'note_total'=>$note_total
+        ]);
+    }
+
+
+
+    
 
 }

@@ -1,15 +1,15 @@
 <?php
 
-use App\Http\Controllers\Admin\Classe\MatiereController;
-use App\Http\Controllers\Admin\Cours\AdminEvaluationController;
-use App\Http\Controllers\ClasseController;
-use App\Http\Controllers\Cours\EvaluationController;
-use App\Http\Controllers\Cours\LessonController;
-use App\Http\Controllers\ProfileController;
-use App\Models\Cours\Evaluation;
 use App\Models\Cours\Exercice;
 use App\Models\Cours\Question;
+use App\Models\Cours\Evaluation;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClasseController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Cours\LessonController;
+use App\Http\Controllers\Cours\EvaluationController;
+use App\Http\Controllers\Admin\Classe\MatiereController;
+use App\Http\Controllers\Admin\Cours\AdminEvaluationController;
 
 
 //Route::resource('/eleve',EleveController::class)->except(['show','edit','create'])->middleware('auth');
@@ -38,6 +38,8 @@ Route::prefix('/cours')->name('cours.')->controller(LessonController::class)->gr
     Route::get('/{lesson}/suivre','suivre')->name('suivre');
     Route::get('/{lesson}/{content}/{numero}/suivre','sectionSuivante')->name('sectionSuivante');
     Route::get('/{lesson}/{content}/{numero}/arriere','sectionArriere')->name('sectionArriere');
+    Route::post('/{lesson}/question','user_question')->name('user_question');
+    Route::post('/{exercice}/correction','exercice_corretion')->name('exercice_corretion');
 });
 
 Route::get('/test',function(){

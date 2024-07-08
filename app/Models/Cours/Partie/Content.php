@@ -8,13 +8,13 @@ use App\Models\Matiere;
 use App\Models\Cours\Niveau;
 use App\Models\Cours\Exercice;
 use App\Models\Cours\PieceJoint;
+use Illuminate\Support\Collection;
 use App\Models\Cours\Partie\Lesson;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Support\Collection;
 
 class Content extends Model
 {
@@ -24,7 +24,9 @@ class Content extends Model
         'numero_section',
         'section_title',
         'lesson_id',
-        'user_id'
+        'user_id',
+        'next_section',
+        'prev_section',
     ];
 
     use HasFactory;
@@ -68,6 +70,14 @@ class Content extends Model
         }
 
         return Collection::make($contents);
+    }
+
+    function next_section():BelongsTo{
+        return $this->belongsTo(Content::class,'next_section');
+    }
+
+    function prev_section():BelongsTo{
+        return $this->belongsTo(Content::class,'prev_section');
     }
 
 }

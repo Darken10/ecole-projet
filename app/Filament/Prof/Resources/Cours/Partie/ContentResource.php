@@ -41,7 +41,7 @@ class ContentResource extends Resource
                     Wizard\Step::make('Information')
                         ->schema([
                             Forms\Components\Select::make('niveau_id')
-                                ->options(Niveau::all()->pluck('name','id'))
+                                ->options(Niveau::all()->pluck('name', 'id'))
                                 //->relationship('niveau', 'name')
                                 ->label('Niveau')
                                 ->preload()
@@ -50,7 +50,7 @@ class ContentResource extends Resource
                                 ->hiddenOn(ContentsRelationManager::class)
                                 ->required(),
                             Forms\Components\Select::make('matiere_id')
-                            ->options(Matiere::all()->pluck('name','id'))
+                                ->options(Matiere::all()->pluck('name', 'id'))
                                 //->relationship('matiere', 'name')
                                 ->label('Matière')
                                 ->live()
@@ -84,9 +84,14 @@ class ContentResource extends Resource
                                 //->hidden()
                                 ->options([auth()->user()->id => auth()->user()->name])
                                 ->default(auth()->user()->id)
-                                ->required()
-                                //->disabled()
-                                ->columnSpanFull(),
+                                ->required(),
+                            Forms\Components\Select::make('prev_section')
+                                ->options(fn (Get $get): Collection => Content::query()->where('lesson_id', $get('lesson_id'))->get()->pluck('section_title', 'id'))
+                                ->label("Section Precedente ")
+                                ->live()
+                                ->preload()
+                                ->searchable()
+                                ->native(False),
                         ])->columns(2),
 
 
@@ -103,6 +108,7 @@ class ContentResource extends Resource
                                 ->label('Le contenu du cours')
                                 ->columnSpanFull(),
                         ])->columns(6),
+
                 ])->columnSpanFull(),
             ]);
     }

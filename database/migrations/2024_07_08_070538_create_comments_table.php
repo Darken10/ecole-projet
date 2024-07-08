@@ -13,15 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lesson_user', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
+            $table->text('message');
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Lesson::class)->constrained()->cascadeOnDelete();
-            $table->tinyInteger('apreciation')->nullable();
-            $table->boolean('is_view')->default(True);
-            $table->boolean('is_learned')->default(False);
-            $table->boolean('is_like')->default(False);
-            $table->tinyInteger('niveau_evolution',unsigned:True)->default(0);
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lesson_user');
+        Schema::dropIfExists('comments');
     }
 };

@@ -109,14 +109,14 @@ class Lesson extends Model
     }
 
     public function addView(){
-        if (!$this->users()->where('user_id',auth()->user()->id)->exists())
-            return $this->users()->attach(auth()->user()->id,['apreciation'=>0, 'is_view'=>True, 'is_learned'=>false,'is_like'=>false]);
+        $this->nb_views += 1;
+        $this->save();
         return $this;
     }
 
     public function addFollower(){
         if (!$this->users()->where('user_id',auth()->user()->id)->exists())
-            return $this->users()->attach(auth()->user()->id,['apreciation'=>0, 'is_view'=>True, 'is_learned'=>True,'is_like'=>false]);
+            return $this->users()->attach(auth()->user()->id,['apreciation'=>0, 'is_view'=>True, 'is_learned'=>True,'is_like'=>false,'niveau_evolution'=>0]);
         $pivot = $this->users()->where('user_id',auth()->user()->id)->get()->last()->pivot;
         $pivot->is_learned=1;
         $this->save();
@@ -136,7 +136,7 @@ class Lesson extends Model
     }
 
     public function count_views():int {
-        return count($this->users);
+        return $this->nb_views;
     }
 
     public function count_likes():int{
@@ -157,4 +157,14 @@ class Lesson extends Model
         }
         return count($all_apreciation)>0 ? $n/count($all_apreciation) : 0;
     }
+
+    public function niveau_evolution(){
+        dd($this->users()->withPivot(['niveau_evolution'])->where('user_id',auth()->user()->id)->get()->last());
+    }
+
+    public function passe_niveau(Content $content){
+        
+        //$this->
+    }
+
 }

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Role extends Model
 {
@@ -12,4 +14,8 @@ class Role extends Model
     protected $fillable = [
         'name'
     ] ;
+
+    function users():BelongsToMany{
+        return $this->belongsToMany(User::class);
+    }
 }

@@ -25,13 +25,19 @@ class DatabaseSeeder extends Seeder
     {
         //User::factory(10)->create();
 
-        User::create([
-            'name' => 'Darken',
+        $user = User::create([
+            'name' => 'Darken Root',
+            'last_name' => 'Darken',
+            'first_name' => 'Root',
+            'sexe' => 'Homme',
+            'numero' => '70707070',
+            'date_naissance' => now(),
             'email' => 'darken@darken.com',
             'email_verified_at' => now(),
             'password' =>  Hash::make('password'),
             'remember_token' => Str::random(10),
         ]);
+
         $this->call([
             StatutSeeder::class,
             ClasseSeeder::class,
@@ -43,5 +49,7 @@ class DatabaseSeeder extends Seeder
             ChapitreSeeder::class,
             LessonSeeder::class,
         ]);
+        $user->roles()->attach([1,2,3]);
+
     }
 }

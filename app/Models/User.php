@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\Role;
 use App\Models\Cours\Exercice;
 use App\Models\Cours\Response;
 use App\Models\Cours\Evaluation;
@@ -29,9 +30,15 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'first_name',
+        'last_name',
+        'numero',
+        'date_naissance',
+        'sexe',
         'name',
         'email',
         'password',
+        'profile_uri',
     ];
 
     /**
@@ -59,6 +66,10 @@ class User extends Authenticatable
 
 
     /****************************************************************** */
+
+    function roles():BelongsToMany{
+        return $this->belongsToMany(Role::class);
+    }
 
     function responses():HasMany{
         return $this->hasMany(Response::class);

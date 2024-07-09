@@ -53,6 +53,7 @@ class RegisteredUserController extends Controller
         ]);
 
         $user->roles()->attach(1);
+        $user->sendEmailVerificationNotification();
 
         event(new Registered($user));
 

@@ -85,13 +85,7 @@ class ContentResource extends Resource
                                 ->options([auth()->user()->id => auth()->user()->name])
                                 ->default(auth()->user()->id)
                                 ->required(),
-                            Forms\Components\Select::make('prev_section')
-                                ->options(fn (Get $get): Collection => Content::query()->where('lesson_id', $get('lesson_id'))->get()->pluck('section_title', 'id'))
-                                ->label("Section Precedente ")
-                                ->live()
-                                ->preload()
-                                ->searchable()
-                                ->native(False),
+                            
                         ])->columns(2),
 
 

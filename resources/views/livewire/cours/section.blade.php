@@ -16,9 +16,9 @@
         @endforeach
     </div>
 
-    <div class="flex -between">
+    <div class="flex justify-between">
         @if ($has_prev)
-            <button class="btn-secondary justify-start" wire:click="prev">Precedente</button>
+            <button class="btn-secondary justify-start" wire:click="prev" >Precedente</button>
         @endif
         @if ($has_next)
             <button class="btn-primary justify-end" wire:click="next">Suivant</button>
@@ -26,6 +26,6 @@
     </div>
 
     <div>
-        
+        <x-cours.ratting />
     </div>
 </div>

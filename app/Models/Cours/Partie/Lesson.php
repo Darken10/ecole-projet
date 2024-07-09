@@ -26,14 +26,11 @@ class Lesson extends Model
 
     protected $fillable = [
         'title',
-        'matiere_id',
         'chapitre_id',
         'user_id',
         'statut_id',
         'lesson_numero',
         'image_uri',
-        'created_at',
-        'updated_at',
         'published_at',
     ];
 
@@ -42,10 +39,10 @@ class Lesson extends Model
         return $this->belongsTo(Chapitre::class);
     }
 
-    function matiere(): BelongsTo|null
+    /*function matiere(): BelongsTo|null
     {
         return $this->belongsTo(Matiere::class);
-    }
+    }*/
 
     function contents(): HasMany
     {

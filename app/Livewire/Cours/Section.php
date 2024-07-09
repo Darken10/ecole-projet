@@ -16,6 +16,7 @@ class Section extends Component
     public int $number_section_finished = 0 ;
     public bool $has_prev=false;
     public bool $has_next=false;
+    public bool $is_appreciate;
 
 
     function mount(Content $content){
@@ -28,6 +29,7 @@ class Section extends Component
             $this->ids_section[] = $content->id; 
         }
         $this->id = $this->content->id;
+        $this->is_appreciate = $this->is_appreciate();
         
     }
 
@@ -87,9 +89,14 @@ class Section extends Component
         return count($user->sections()->where('lesson_id',$this->content->lesson->id)->get());
     }
 
+    function is_appreciate():bool{
+        $pivot = $this->content->lesson->users()->where('user_id',auth()->user()->id)->withPivot(['apreciation'])->get()->last()->pivot;
+        return $pivot->apreciation != 0;
+    }
 
     public function render()
     {
+        //$this->is_appreciate();
         $this->has_prev_or_next();
         return view('livewire.cours.section',[
             'content' => $this->content

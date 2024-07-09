@@ -42,6 +42,5 @@ class Matiere extends Model
     {
         return $this->hasMany(Chapitre::class);
     }
-
     
 }

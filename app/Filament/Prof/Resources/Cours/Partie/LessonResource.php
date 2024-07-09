@@ -4,12 +4,14 @@ namespace App\Filament\Prof\Resources\Cours\Partie;
 
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Matiere;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
+use Filament\Actions\CreateAction;
 use Illuminate\Support\Collection;
 use App\Models\Cours\Partie\Lesson;
 use App\Models\Cours\Partie\Chapitre;
@@ -46,9 +48,9 @@ class LessonResource extends Resource
                         ->description('Les informations consernant la Matiere et le Chapitre')
                         ->schema([
                             Forms\Components\Select::make('matiere_id')
-                                ->relationship('matiere', 'name')
+                                ->options(fn (Get $get): Collection => Matiere::all()->pluck('name', 'id'))
                                 ->live()
-                                ->afterStateUpdated(fn (Set $set)=>$set('chapitre_id',null))
+                                ->afterStateUpdated(fn (Set $set) => $set('chapitre_id', null))
                                 ->label("La Matière")
                                 ->preload()
                                 ->searchable()
@@ -89,18 +91,25 @@ class LessonResource extends Resource
                         ])->columns(12),
                     Wizard\Step::make("Auteur")->schema([
                         Forms\Components\Select::make('user_id')
-                            ->relationship('user', 'name')
+                            ->options([auth()->user()->id => auth()->user()->name])
+                            ->default(auth()->user()->id)
                             ->label('Le Professeur')
                             ->native(False)
                             ->required(),
+
                         Forms\Components\DateTimePicker::make('published_at')
                             ->label('Publier le')
                             ->native(False)
                             ->required(),
                     ])->columns(2),
-                ])->columnSpanFull(),
-
+                ])
+                    ->columnSpanFull(),
             ]);
+        /*CreateAction::make()
+                ->mutateFormDataUsing(function (array $data){
+                    $data['user_id']=auth()->user()->id;
+                    return $data;
+                });*/
     }
 
     public static function table(Table $table): Table
@@ -145,7 +154,6 @@ class LessonResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
             ])
             ->filters([
                 //
@@ -153,6 +161,7 @@ class LessonResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -198,7 +207,7 @@ class LessonResource extends Resource
     public static function getRelations(): array
     {
         return [
-            
+
             ContentsRelationManager::class,
             ObjectifsRelationManager::class,
             PreRequiesRelationManager::class,

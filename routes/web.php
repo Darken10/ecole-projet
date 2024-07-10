@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Chat\MessageController;
 use App\Http\Controllers\Cours\LessonController;
 use App\Http\Controllers\Cours\EvaluationController;
 use App\Http\Controllers\Admin\Classe\MatiereController;
@@ -66,6 +67,30 @@ Route::middleware('auth')->group(function () {
 });
 
 
+/** Chat (Conversation) */
+Route::prefix('/conversations')->name('chat.')->controller(MessageController::class)->middleware(['auth',])->group(function (){
+    Route::get('/','index')->name('index');
+    Route::get('/user/{user}','show')->name('show')
+    //->middleware('can:talkTo,user')
+    ->where([
+        'user'=>'[0-9]+',
+    ]);
+    Route::post('/user/{user}','store')->name('store')
+    //->middleware('can:talkTo,user')
+    ->where([
+        'user'=>'[0-9]+',
+    ]);
+
+    /*Route::get('/compagnie/{compagnie}','compagnieShow')->name('compagnieShow')->where([
+        'compagnie'=>'[0-9]+',
+    ]);
+    Route::post('/compagnie/{compagnie}','compagnieStore')->where([
+        'compagnie'=>'[0-9]+',
+    ]);*/
+});
+
+
+
 /**connection avec google */
 Route::get('redirect/google',function (){
     return Socialite::driver('google')->redirect();
@@ -75,5 +100,7 @@ Route::get('callback/google',function (){
     $user = Socialite::driver('google')->user();
     dd($user);
 });
+
+
 
 require __DIR__.'/auth.php';

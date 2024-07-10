@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'google'=>[
+        'client_id'=>"",
+        'client_secret'=> "",
+        'redirect'=> 'http://localhost:8000/ecole-project/redirect/google',
+    ]
+
 ];

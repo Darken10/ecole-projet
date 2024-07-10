@@ -5,6 +5,7 @@ use App\Models\Cours\Question;
 use App\Models\Cours\Evaluation;
 use App\Models\Cours\Partie\Lesson;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Cours\LessonController;
@@ -62,6 +63,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+
+/**connection avec google */
+Route::get('redirect/google',function (){
+    return Socialite::driver('google')->redirect();
+});
+
+Route::get('callback/google',function (){
+    $user = Socialite::driver('google')->user();
+    dd($user);
 });
 
 require __DIR__.'/auth.php';

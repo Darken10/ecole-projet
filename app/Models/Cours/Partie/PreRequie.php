@@ -2,9 +2,9 @@
 
 namespace App\Models\Cours\Partie;
 
+use App\Models\Matiere;
 use App\Models\Cours\Partie\Lesson;
 use App\Models\Cours\Partie\Chapitre;
-use App\Models\Matiere;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,6 +18,7 @@ class PreRequie extends Model
     protected $fillable = [
         'title',
         'description',
+        'liens',
         'lesson_id',
     ];
 

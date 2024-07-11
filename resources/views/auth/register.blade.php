@@ -1,4 +1,7 @@
 <x-guest-layout>
+    @php
+        $niveaux = App\Models\Cours\Niveau::all();
+    @endphp
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
@@ -21,7 +24,7 @@
                 <!-- Sexe -->
                 <div>
                     <x-input-label for="sexe" :value="__('Sexe')" />
-                    <x-select-input id="sexe" class="block mt-1 w-full my-4" type="text" name="sexe" :value="old('sexe')" required autofocus autocomplete="name" >
+                    <x-select-input id="sexe" class="block mt-1 w-full my-4"  name="sexe" :value="old('sexe')" required autofocus autocomplete="name" >
                         <option value="Homme">Homme</option>
                         <option value="Femme">Femme</option>
                     </x-select-input>
@@ -32,6 +35,15 @@
                     <x-input-label for="date_naissance" :value="__('Date de Naissance')" />
                     <x-text-input id="date_naissance" class="block mt-1 w-full my-4" type="date" name="date_naissance" :value="old('date_naissance')" required autofocus autocomplete="name" />
                     <x-input-error :messages="$errors->get('date_naissance')" class="mt-2" />
+                </div>
+                <div class="w-full">
+                    <x-input-label for="niveau" :value="__('Niveau')" />
+                    <x-select-input id="niveau" class="block mt-1 w-full my-4"  name="niveau_id" :value="old('niveau_id')" required autofocus autocomplete="name" >
+                        @foreach ($niveaux  as $niveau)
+                            <option value="{{ $niveau->id }}">{{ $niveau->name }}</option>
+                        @endforeach
+                    </x-select-input>
+                    <x-input-error :messages="$errors->get('niveau_id')" class="mt-2" />
                 </div>
             </div>
         </div>

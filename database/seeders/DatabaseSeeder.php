@@ -36,6 +36,23 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
             'password' =>  Hash::make('password'),
             'remember_token' => Str::random(10),
+            'statut_id' => 1,
+            'niveau_id'=> 12,
+        ]);
+
+        $user = User::create([
+            'name' => 'Darken1 Root1',
+            'last_name' => 'Darken1',
+            'first_name' => 'Root1',
+            'sexe' => 'Homme',
+            'numero' => '70707071',
+            'date_naissance' => now(),
+            'email' => 'darken1@darken.com',
+            'email_verified_at' => now(),
+            'password' =>  Hash::make('password'),
+            'remember_token' => Str::random(10),
+            'statut_id' => 1,
+            'niveau_id' => 3,
         ]);
 
         $this->call([
@@ -49,7 +66,8 @@ class DatabaseSeeder extends Seeder
             ChapitreSeeder::class,
             LessonSeeder::class,
         ]);
-        $user->roles()->attach([1,2,3]);
+        $user->roles()->attach([1,2,3,4]);
+        $user->roles()->attach([1]);
 
     }
 }

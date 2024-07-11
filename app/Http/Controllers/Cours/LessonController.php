@@ -3,21 +3,26 @@
 namespace App\Http\Controllers\Cours;
 
 use Exception;
+use App\Models\User;
 use App\Models\Matiere;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Helpers\TypeQuestion;
 use App\Models\Cours\Exercice;
 use App\Models\Cours\Partie\Lesson;
 use App\Http\Controllers\Controller;
 use App\Models\Cours\Partie\Content;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Cours\Partie\UserQuestion;
 
 class LessonController extends Controller
 {
     
     function index(){
-        
-        $matieres = Matiere::all();
+
+
+        $matieres = auth()->user()->niveau->matieres;
+        //dd($matieres);
         return view('cours.client.lesson.index',[
             'matieres'=>$matieres
         ]);
@@ -158,6 +163,12 @@ class LessonController extends Controller
     }
 
 
+    function mes_cours(){
+        $lessons = auth()->user()->lessons;
+        return view('cours.client.lesson.mes-cours',[
+            'lessons'=>$lessons,
+        ]);
+    }
 
     
 

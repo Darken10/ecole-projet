@@ -50,6 +50,7 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'profile_uri'=> $request->profile_uri ?? null,
+            'niveau_id'=>$request->niveau_id,
         ]);
 
         $user->roles()->attach(1);
@@ -59,6 +60,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('cours.index', absolute: false));
     }
 }

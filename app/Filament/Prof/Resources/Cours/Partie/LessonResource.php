@@ -77,6 +77,10 @@ class LessonResource extends Resource
                                 ->label("Le Titre de la Leçon")
                                 ->required()
                                 ->columnSpan(10),
+                            Forms\Components\Textarea::make('description')
+                                ->label("La Description")
+                                ->required()
+                                ->columnSpan(12),
                             Forms\Components\FileUpload::make('image_uri')
                                 ->label("Image")
                                 ->image()
@@ -87,7 +91,6 @@ class LessonResource extends Resource
                                 ->required()
                                 ->native(False)
                                 ->columnSpan(6),
-
                         ])->columns(12),
                     Wizard\Step::make("Auteur")->schema([
                         Forms\Components\Select::make('user_id')

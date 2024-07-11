@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Statut;
+use App\Models\Cours\Niveau;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -24,6 +26,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->foreignIdFor(Niveau::class)->nullable();
+            $table->foreignIdFor(Statut::class)->default(1);
             $table->timestamps();
         });
 

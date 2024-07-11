@@ -32,6 +32,7 @@ class Lesson extends Model
         'lesson_numero',
         'image_uri',
         'published_at',
+        'description'
     ];
 
     function chapitre(): BelongsTo|null

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Statut;
+use App\Models\Cours\Niveau;
 use App\Models\Admin\Classe\Classe;
 use App\Models\Cours\Partie\Lesson;
 use App\Models\Cours\Partie\Partie;
@@ -24,13 +25,10 @@ class Matiere extends Model
         'statut_id',
     ];
 
-    protected $with = [
-        'classes',
-    ];
 
-    function classes(): BelongsToMany
+    function niveaux(): BelongsToMany
     {
-        return $this->belongsToMany(Classe::class);
+        return $this->belongsToMany(Niveau::class);
     }
 
     function statut(): BelongsTo
@@ -42,5 +40,6 @@ class Matiere extends Model
     {
         return $this->hasMany(Chapitre::class);
     }
+
     
 }

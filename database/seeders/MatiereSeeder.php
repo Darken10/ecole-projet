@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Matiere;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class MatiereSeeder extends Seeder
 {
@@ -13,7 +13,7 @@ class MatiereSeeder extends Seeder
      */
     public function run(): void
     {
-        $table = ['Français','Anglais','Histoire-Géographie','Physique-Chimique','Mathematique','Philosophie','SVT'];
+        $table = ['Français','Anglais','Histoire-Géographie','Mathematique','SVT','Allemand','Physique-Chimique','Philosophie'];
 
         foreach ($table as $key => $value) {
             Matiere::create([

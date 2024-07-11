@@ -15,7 +15,7 @@
         </a>
         <div>
             <p class=" text-xs md:text-sm">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde ipsa enim temporibus...
+                {{ Str::limit($lesson->description,100) }}
             </p>
         </div>
         

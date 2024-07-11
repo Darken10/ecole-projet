@@ -2,13 +2,16 @@
 
 namespace App\Models\Cours;
 
-use App\Models\Cours\Partie\Chapitre;
-use App\Models\Cours\Partie\Content;
+use App\Models\User;
+use App\Models\Matiere;
 use App\Models\Cours\Question;
+use Illuminate\Support\Collection;
+use App\Models\Cours\Partie\Content;
+use App\Models\Cours\Partie\Chapitre;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Niveau extends Model
 {
@@ -39,6 +42,16 @@ class Niveau extends Model
 
     function contents():HasMany{
         return $this->hasMany(Content::class);
+    }
+
+    function matieres(): BelongsToMany
+    {
+        return $this->belongsToMany(Matiere::class);
+    }
+
+    function users(): HasMany
+    {
+        return $this->hasMany(User::class);
     }
 
 }

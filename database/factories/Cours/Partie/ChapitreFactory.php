@@ -18,8 +18,8 @@ class ChapitreFactory extends Factory
     {
         return [
             'title' => fake()->sentence(),
-            'matiere_id' => rand(1,7),
-            'niveau_id' => rand(1,13),
+            'matiere_id' => rand(1,6),
+            'niveau_id' => rand(1,12),
         ];
     }
 }

@@ -20,6 +20,7 @@ return new class extends Migration
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->text('description');
             $table->tinyInteger('lesson_numero',unsigned:True)->default(1);
             $table->string('image_uri')->nullable();
             $table->foreignIdFor(User::class)->constrained()->nullOnDelete();

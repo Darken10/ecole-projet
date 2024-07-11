@@ -34,14 +34,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::prefix('/cours')->name('cours.')->controller(LessonController::class)->group(function (){
+Route::prefix('/cours')->name('cours.')->middleware(['auth', 'verified'])->controller(LessonController::class)->group(function (){
     Route::get('/','index')->name('index');
+    Route::get('/mes-cours','mes_cours')->name('mes_cours');
     Route::get('/{lesson}','show')->name('show');
     Route::get('/{lesson}/suivre','suivre')->name('suivre');
     Route::get('/{lesson}/{content}/{numero}/suivre','sectionSuivante')->name('sectionSuivante');
     Route::get('/{lesson}/{content}/{numero}/arriere','sectionArriere')->name('sectionArriere');
     Route::post('/{lesson}/question','user_question')->name('user_question');
     Route::post('/{exercice}/correction','exercice_corretion')->name('exercice_corretion');
+    
 });
 
 Route::get('/test',function(){
@@ -68,7 +70,7 @@ Route::middleware('auth')->group(function () {
 
 
 /** Chat (Conversation) */
-Route::prefix('/conversations')->name('chat.')->controller(MessageController::class)->middleware(['auth',])->group(function (){
+Route::prefix('/conversations')->name('chat.')->middleware(['auth', 'verified'])->controller(MessageController::class)->middleware(['auth',])->group(function (){
     Route::get('/','index')->name('index');
     Route::get('/user/{user}','show')->name('show')
     //->middleware('can:talkTo,user')
@@ -100,6 +102,7 @@ Route::get('callback/google',function (){
     $user = Socialite::driver('google')->user();
     dd($user);
 });
+
 
 
 

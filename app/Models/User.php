@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Models\Role;
+use App\Models\Cours\Niveau;
 use App\Models\Cours\Exercice;
 use App\Models\Cours\Response;
 use App\Models\Cours\Evaluation;
@@ -17,6 +18,7 @@ use App\Models\Cours\Partie\UserQuestion;
 use App\Models\Cours\Partie\UserQuestionResponse;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -39,6 +41,8 @@ class User extends Authenticatable
         'email',
         'password',
         'profile_uri',
+        'statut_id',
+        'niveau_id',
     ];
 
     /**
@@ -113,5 +117,9 @@ class User extends Authenticatable
 
     function exercices():BelongsToMany{
         return $this->belongsToMany(Exercice::class)->withPivot(['note','note_max','response','created_at','updated_at']);
+    }
+
+    function niveau():BelongsTo{
+        return $this->belongsTo(Niveau::class);
     }
 }

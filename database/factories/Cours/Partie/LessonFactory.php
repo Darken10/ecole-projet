@@ -23,6 +23,7 @@ class LessonFactory extends Factory
             'statut_id' => rand(1,3),
             'lesson_numero' => rand(1,3),
             'published_at' => now(),
+            'description' => fake()->paragraphs(1,True)
         ];
     }
 }

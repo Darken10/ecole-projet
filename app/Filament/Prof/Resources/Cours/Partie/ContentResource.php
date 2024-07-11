@@ -42,24 +42,22 @@ class ContentResource extends Resource
                         ->schema([
                             Forms\Components\Select::make('niveau_id')
                                 ->options(Niveau::all()->pluck('name', 'id'))
-                                //->relationship('niveau', 'name')
+                                ->afterStateUpdated(fn (Set $set) => $set('matiere_id', null))
                                 ->label('Niveau')
+                                ->live()
                                 ->preload()
                                 ->searchable()
                                 ->native(False)
-                                ->hiddenOn(ContentsRelationManager::class)
-                                ->required(),
+                                ->hiddenOn(ContentsRelationManager::class),
                             Forms\Components\Select::make('matiere_id')
-                                ->options(Matiere::all()->pluck('name', 'id'))
-                                //->relationship('matiere', 'name')
+                                ->options(fn (Get $get): Collection|null => Niveau::find($get('niveau_id'))?->matieres?->pluck('name', 'id'))
                                 ->label('Matière')
                                 ->live()
                                 ->afterStateUpdated(fn (Set $set) => $set('chapitre_id', null))
                                 ->preload()
                                 ->searchable()
                                 ->native(False)
-                                ->hiddenOn(ContentsRelationManager::class)
-                                ->required(),
+                                ->hiddenOn(ContentsRelationManager::class),
                             Forms\Components\Select::make('chapitre_id')
                                 ->options(fn (Get $get): Collection => Chapitre::query()->where('matiere_id', $get('matiere_id'))->get()->pluck('title', 'id'))
                                 ->label("Le Chapitre")
@@ -67,8 +65,7 @@ class ContentResource extends Resource
                                 ->preload()
                                 ->searchable()
                                 ->native(False)
-                                ->hiddenOn(ContentsRelationManager::class)
-                                ->required(),
+                                ->hiddenOn(ContentsRelationManager::class),
                             Forms\Components\Select::make('lesson_id')
                                 ->options(fn (Get $get): Collection => Lesson::query()->where('chapitre_id', $get('chapitre_id'))->get()->pluck('title', 'id'))
                                 ->afterStateUpdated(fn (Get $get, Set $set) => $set('numero_section', Content::query()->where('lesson_id', (int)$get('lesson_id'))->get()->last()?->numero_section + 1 ?? 1))
@@ -81,7 +78,6 @@ class ContentResource extends Resource
                                 ->required(),
 
                             Forms\Components\Select::make('user_id')
-                                //->hidden()
                                 ->options([auth()->user()->id => auth()->user()->name])
                                 ->default(auth()->user()->id)
                                 ->required(),
@@ -172,6 +168,7 @@ class ContentResource extends Resource
                 ->schema([
                     TextEntry::make('content')
                         ->label('Le contenu du cours')
+                        ->html()
                         ->columnSpanFull(),
                 ])->columns(2),
         ]);

@@ -22,15 +22,12 @@ class Evaluation extends Model
         'statut_id',
         'cote',
         'user_id',
-        'cours_id',
         'title',
         'description',
-        'note_max',
-        'difficulty',
         'time',
-        'prof',
         'lesson_id',
     ];
+
 
     function userCreated(){
         return $this->user();

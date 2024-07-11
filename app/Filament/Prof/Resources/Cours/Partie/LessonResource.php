@@ -28,6 +28,7 @@ use App\Filament\Prof\Resources\Cours\Partie\LessonResource\RelationManagers;
 use App\Filament\Prof\Resources\LessonResource\RelationManagers\ContentsRelationManager;
 use App\Filament\Prof\Resources\LessonResource\RelationManagers\ObjectifsRelationManager;
 use App\Filament\Prof\Resources\LessonResource\RelationManagers\PreRequiesRelationManager;
+use App\Filament\Prof\Resources\LessonResource\RelationManagers\EvaluationsRelationManager;
 use App\Filament\Prof\Resources\LessonResource\RelationManagers\UserQuestionsRelationManager;
 use App\Filament\Prof\Resources\LessonResource\RelationManagers\UserQuestionResponsesRelationManager;
 
@@ -178,11 +179,11 @@ class LessonResource extends Resource
         return $infolist->schema([
             Section::make('Information')
                 ->schema([
-                    TextEntry::make('matiere.name')
-                        ->label('Matière'),
-                    TextEntry::make('chapitre.title')
-                        ->label('Chapitre'),
-                ]),
+                    TextEntry::make('title')->label('Titre'),
+                    TextEntry::make('chapitre.title')->label('Chapitre'),
+                        TextEntry::make('chapitre.matiere.name')->label('Matiere'),
+                        TextEntry::make('chapitre.niveau.name')->label('Niveau'),
+                ])->columns(2),
 
 
             Section::make('Contenu du Cours')
@@ -214,6 +215,7 @@ class LessonResource extends Resource
             ContentsRelationManager::class,
             ObjectifsRelationManager::class,
             PreRequiesRelationManager::class,
+            EvaluationsRelationManager::class,
             UserQuestionsRelationManager::class
             //UserQuestionResponsesRelationManager::class,
         ];

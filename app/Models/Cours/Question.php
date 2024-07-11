@@ -16,12 +16,10 @@ class Question extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
         'text',
         'point',
         'options',
         'evaluation_id',
-        'type_question_id',
     ];
 
     protected function casts(): array
@@ -30,20 +28,13 @@ class Question extends Model
             'options' => 'array',
         ];
     }
-
-    function niveau():BelongsTo{
-        return $this->belongsTo(Niveau::class);
-    }
     
-    /*function responses():HasMany{
-        return $this->hasMany(Response::class);
-    }*/
 
-    function evaluations():BelongsTo {
+    function evaluation():BelongsTo {
         return $this->belongsTo(Evaluation::class);
     }
     // La reponse traiter par l'utilisateur
-    function corriger():HasMany{
+    function corrigers():HasMany{
         return $this->hasMany(Corriger::class);
     }
 

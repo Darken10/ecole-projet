@@ -20,7 +20,6 @@ return new class extends Migration
             $table->tinyInteger('cote',unsigned:True)->default(1);
             $table->text('description')->nullable();
             $table->time('time');
-            $table->tinyInteger('difficulty',unsigned:True)->default(1);           
             $table->foreignIdFor(Lesson::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Statut::class)->constrained();

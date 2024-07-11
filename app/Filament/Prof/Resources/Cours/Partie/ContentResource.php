@@ -59,7 +59,7 @@ class ContentResource extends Resource
                                 ->native(False)
                                 ->hiddenOn(ContentsRelationManager::class),
                             Forms\Components\Select::make('chapitre_id')
-                                ->options(fn (Get $get): Collection => Chapitre::query()->where('matiere_id', $get('matiere_id'))->get()->pluck('title', 'id'))
+                                ->options(fn (Get $get): Collection => Chapitre::query()->where('niveau_id', $get('niveau_id'))->where('matiere_id', $get('matiere_id'))->get()->pluck('title', 'id'))
                                 ->label("Le Chapitre")
                                 ->live()
                                 ->preload()

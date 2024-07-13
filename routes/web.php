@@ -43,7 +43,10 @@ Route::prefix('/cours')->name('cours.')->middleware(['auth', 'verified'])->contr
     Route::get('/{lesson}/{content}/{numero}/arriere','sectionArriere')->name('sectionArriere');
     Route::post('/{lesson}/question','user_question')->name('user_question');
     Route::post('/{exercice}/correction','exercice_corretion')->name('exercice_corretion');
-    
+    Route::get('/{lesson}/evaluation','evaluations_list')->name('evaluation.list');
+    Route::get('/{evaluation}/faire-evaluation','evaluation')->name('evaluation');
+    Route::post('/{evaluation}/evaluation','soumettre')->name('soumettre');
+    Route::get('/{evaluation}/evaluation/show','evaluation_voir')->name('evaluation_voir');
 });
 
 Route::get('/test',function(){

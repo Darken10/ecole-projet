@@ -8,6 +8,7 @@ use App\Models\Role;
 use App\Models\Cours\Niveau;
 use App\Models\Cours\Exercice;
 use App\Models\Cours\Response;
+use App\Models\Cours\Soumition;
 use App\Models\Cours\Evaluation;
 use App\Models\Cours\Soumission;
 use App\Models\Cours\Partie\Lesson;
@@ -121,5 +122,9 @@ class User extends Authenticatable
 
     function niveau():BelongsTo{
         return $this->belongsTo(Niveau::class);
+    }
+
+    function soumitions():HasMany{
+        return $this->hasMany(Soumition::class);
     }
 }

@@ -3,12 +3,13 @@
 namespace App\Filament\Prof\Resources\LessonResource\RelationManagers;
 
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Resources\RelationManagers\RelationManager;
+use App\Filament\Prof\Resources\Cours\EvaluationResource;
 
 class EvaluationsRelationManager extends RelationManager
 {
@@ -16,12 +17,7 @@ class EvaluationsRelationManager extends RelationManager
 
     public function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
-            ]);
+        return EvaluationResource::form($form);
     }
 
     public function table(Table $table): Table
@@ -46,5 +42,10 @@ class EvaluationsRelationManager extends RelationManager
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public function isReadOnly(): bool
+    {
+        return false;
     }
 }

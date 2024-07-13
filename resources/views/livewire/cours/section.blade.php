@@ -11,7 +11,7 @@
     
     <div class="my-8 border-t-2 py-4">
         @foreach ($content->exercices as $exo)
-            <x-cours.exercice :$lesson :exercice="$exo" :i="$loop->index"  />
+            <x-cours.exercice :lesson="$content->lesson" :exercice="$exo" :i="$loop->index"  />
             {{-- @livewire('cours.exercice',['exercice'=>$exo,'i'=>$loop->index],key($exo->id)) --}}
         @endforeach
     </div>
@@ -24,6 +24,9 @@
             <button class="btn-primary justify-end" wire:click="next">Suivant</button>
         @endif
     </div>
+    @if ($number_section_finished == count($all_contents))
+        <a class="btn-primary justify-end" href="{{ route('cours.evaluation.list',$content->lesson) }}" >Les Evaluations</a>
+    @endif
 
     <div>
         <x-cours.ratting />

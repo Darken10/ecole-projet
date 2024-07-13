@@ -29,4 +29,5 @@
     @else
         <x-aucun>Aucun Contenu</x-aucun>
     @endif
+    
 @endsection

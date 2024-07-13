@@ -5,6 +5,7 @@ namespace App\Models\Cours;
 use App\Models\User;
 use App\Models\Statut;
 use App\Models\Cours\Question;
+use App\Models\Cours\Soumition;
 use App\Models\Cours\Soumission;
 use Illuminate\Support\Collection;
 use App\Models\Cours\Partie\Lesson;
@@ -63,5 +64,17 @@ class Evaluation extends Model
 
     static function all_evaluations():Collection{
         return Evaluation::query()->where('user_id',auth()->user()->id)->get();
+    }
+
+    function soumitions():HasMany{
+        return $this->hasMany(Soumition::class);
+    }
+
+    function note_max():int{
+        $max = 0;
+        foreach ($this->questions as $question) {
+            $max += $question->point;
+        }
+        return $max;
     }
 }

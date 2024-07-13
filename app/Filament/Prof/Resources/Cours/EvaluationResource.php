@@ -75,7 +75,7 @@ class EvaluationResource extends Resource
                             ->hiddenOn(EvaluationsRelationManager::class)
                             ->required(),
 
-                    ])->columns(2),
+                    ])->columns(2)->hiddenOn(EvaluationsRelationManager::class),
 
                     Wizard\Step::make('Informations')->schema([
                         Forms\Components\TextInput::make('title')
@@ -94,16 +94,18 @@ class EvaluationResource extends Resource
                             ->required(),
                         Forms\Components\Select::make('statut_id')
                             ->relationship('statut', 'name')
-                            ->required(),
+                            ->required(), 
                         Forms\Components\Textarea::make('description')
                             ->columnSpanFull(),
 
-                    ]),
+                    ])->columns(2),
                     //Wizard\Step::make('')->schema([]),
                 ])->columnSpanFull(),
 
             ]);
     }
+
+
 
     public static function table(Table $table): Table
     {

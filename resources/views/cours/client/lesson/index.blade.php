@@ -8,9 +8,13 @@
 @endsection
 
 @section('content')
+
     <div>
         <x-carroucel />
     </div>
+    {{-- <div>
+        @livewire('cours.question', ['evaluation' => App\Models\Cours\Evaluation::all()->last()], key(1))
+    </div> --}}
     
     <div class="bg-white m-4 p-8 shadow-sm" >
         <x-cours.accordeon-cours :$matieres/>

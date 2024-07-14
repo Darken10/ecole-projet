@@ -29,6 +29,9 @@
     @endif
 
     <div>
-        <x-cours.ratting :lesson="$content->lesson" />
+        {{-- <x-cours.ratting :lesson="$content->lesson" /> --}}
+
+        <livewire:cours.rating :lesson="$content->lesson" />
+
     </div>
 </div>

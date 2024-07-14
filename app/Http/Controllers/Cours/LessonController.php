@@ -23,9 +23,7 @@ class LessonController extends Controller
 
     function index()
     {
-
-
-        $matieres = auth()->user()->niveau->matieres;
+        $matieres = Lesson::all_my_niveau_matieres();
         //dd($matieres);
         return view('cours.client.lesson.index', [
             'matieres' => $matieres

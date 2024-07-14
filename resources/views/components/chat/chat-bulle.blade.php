@@ -10,11 +10,12 @@
         </button>
         <div class="flex flex-col  max-w-[480px] leading-1.5 p-4 border-gray-200 bg-blue-400  rounded-s-xl rounded-es-xl rounded-b-xl dark:bg-gray-700">
             <div class="flex items-center space-x-2 rtl:space-x-reverse justify-end">
-                <span class="text-sm font-normal text-gray-500 dark:text-gray-400">11:46</span>
                 <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ $message->from->name }}</span>
             </div>
             <p class="text-sm font-normal py-2.5 text-gray-900 dark:text-white">{!! nl2br(e($message->message)) !!}</p>
-            <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Delivered</span>
+            <div class="flex justify-end italic gap-2">
+               <span class="text-sm font-normal text-gray-500 dark:text-gray-400">{{ $message->created_at->diffForHumans() }}</span>
+            </div>
         </div>
         <img class="w-8 h-8 rounded-full" src="{{ asset($message->from->profileUrl) }}" alt="Jese image">
     @else

@@ -38,6 +38,5 @@
             @endforeach
             <button type="submit" class="btn-primary" >Corriger</button>
         </form>
-        <button class="btn-primary" >fermer</button>
     </div>
 </div>

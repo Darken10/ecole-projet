@@ -4,6 +4,7 @@ namespace App\Models\Cours\Partie;
 
 use App\Models\Matiere;
 use App\Models\Cours\Niveau;
+use Illuminate\Support\Collection;
 use App\Models\Cours\Partie\Lesson;
 use App\Models\Cours\Partie\Partie;
 use App\Models\Cours\Partie\Objectif;
@@ -49,6 +50,7 @@ class Chapitre extends Model
     {
         return count($this->lessons()->where('published_at', '<', now())->get()) > 0;
     }
+
 
     
 }

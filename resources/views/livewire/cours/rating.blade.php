@@ -46,7 +46,5 @@
                 </div>
             </div>
         </div>
-    @else
-        <p>Vous avez noté ce cours: {{ $apreciation }} étoiles.</p>
     @endif
 </div>

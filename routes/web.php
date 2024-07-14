@@ -10,6 +10,7 @@ use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Chat\MessageController;
 use App\Http\Controllers\Cours\LessonController;
+use App\Http\Controllers\Contact\ContactController;
 use App\Http\Controllers\Cours\EvaluationController;
 use App\Http\Controllers\User\UserProfileController;
 use App\Http\Controllers\Admin\Classe\MatiereController;
@@ -68,8 +69,13 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/contact',[ContactController::class,'contact'])->name('contact.contact');
+
+
 Route::prefix('/user')->controller(UserProfileController::class)->middleware('auth')->group(function () {
     Route::get('/profile', 'profile')->name('user.profile');
+    Route::get('/profile/reset-password',  'reset_password')->name('user.profile.reset-password');
+
 });
 
 Route::middleware('auth')->group(function () {

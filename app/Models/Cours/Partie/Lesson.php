@@ -180,4 +180,12 @@ class Lesson extends Model
         return $this->users()->wherePivot('is_like',true)->where('user_id',auth()->user()->id)->get()->existes;
     }
 
+    public static function all_my_niveau_matieres(){
+        /*  return Content::all() ;
+        filter(fn ($lesson)=>$lesson->has('contents') )
+        filter(fn($chapitre)=>$chapitre?->lessons) */
+        $matieres = auth()->user()->niveau->matieres->filter(fn($matiere)=>$matiere->chapitres()->exists());
+        return ($matieres->filter(fn ($matiere)=>$matiere->chapitres?->filter(fn ($chapitre) => $chapitre->lessons()->exists())));
+    }
+
 }

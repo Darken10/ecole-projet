@@ -6,7 +6,7 @@
         @csrf
 
         <div>
-            <x-form-register />
+            <x-form-register register  />
         </div>
 
         <h3 class=" text-2xl border-t-2 mt-4 pt-2 text-center">Mot de Passe</h3>

@@ -38,7 +38,7 @@
             </a>
 
             <x-primary-button class="ms-3">
-                {{ __('Log in') }}
+                {{ __('Connecter') }}
             </x-primary-button>
         </div>
     </form>

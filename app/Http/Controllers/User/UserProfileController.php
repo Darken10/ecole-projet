@@ -13,4 +13,9 @@ class UserProfileController extends Controller
             'user'=>auth()->user(),
         ]);
     }
+
+    public function reset_password(){
+        
+        return view('user.updated-password');
+    }
 }

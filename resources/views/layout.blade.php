@@ -25,10 +25,10 @@
                 <section>
                     @yield('content')
                 </section>
-                <footer>
-                    @include('shared.client.footer')
-                </footer>
             </main>
+            <footer>
+                @include('shared.client.footer')
+            </footer>
         </div>
         @livewireScripts
         @yield('script','')

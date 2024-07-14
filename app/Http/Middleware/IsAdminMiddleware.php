@@ -15,7 +15,7 @@ class IsAdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->user()->roles()->where('name','admin')->exists()or $request->user()->roles()->where('name','root')->exists()) 
+        if($request->user()?->roles()->where('name','admin')->exists()or $request->user()?->roles()->where('name','root')->exists()) 
             return $next($request);
         
         abort(403,"Desole vous n'avez pas acès a cette page");

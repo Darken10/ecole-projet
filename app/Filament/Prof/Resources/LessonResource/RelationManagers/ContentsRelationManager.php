@@ -2,7 +2,6 @@
 
 namespace App\Filament\Prof\Resources\LessonResource\RelationManagers;
 
-use App\Filament\Prof\Resources\Cours\Partie\ContentResource;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Get;
@@ -12,6 +11,7 @@ use App\Models\Cours\Partie\Content;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
+use App\Filament\Prof\Resources\Cours\Partie\ContentResource;
 
 class ContentsRelationManager extends RelationManager
 {

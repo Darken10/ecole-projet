@@ -9,6 +9,7 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\Cours\Niveau;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Actions\CreateAction;
@@ -48,22 +49,32 @@ class LessonResource extends Resource
                     Wizard\Step::make('Matière et Chapitre')
                         ->description('Les informations consernant la Matiere et le Chapitre')
                         ->schema([
+                            Forms\Components\Select::make('niveau_id')
+                                ->options(Niveau::all()->pluck('name', 'id'))
+                                ->afterStateUpdated(fn (Set $set) => $set('matiere_id', null))
+                                ->label('Niveau')
+                                ->live()
+                                ->preload()
+                                ->searchable()
+                                ->native(False),
                             Forms\Components\Select::make('matiere_id')
-                                ->options(fn (Get $get): Collection => Matiere::all()->pluck('name', 'id'))
+                                ->options(fn (Get $get): Collection|null => Niveau::find($get('niveau_id'))?->matieres?->pluck('name', 'id'))
+                                ->label('Matière')
                                 ->live()
                                 ->afterStateUpdated(fn (Set $set) => $set('chapitre_id', null))
-                                ->label("La Matière")
                                 ->preload()
                                 ->searchable()
-                                ->native(False)
-                                ->required(),
+                                ->native(False),
                             Forms\Components\Select::make('chapitre_id')
-                                ->options(fn (Get $get): Collection => Chapitre::query()->where('matiere_id', $get('matiere_id'))->get()->pluck('title', 'id'))
+                                ->options(fn (Get $get): Collection => Chapitre::query()->where('niveau_id', $get('niveau_id'))->where('matiere_id', $get('matiere_id'))->get()->pluck('title', 'id'))
                                 ->label("Le Chapitre")
+                                ->live()
                                 ->preload()
                                 ->searchable()
                                 ->native(False)
-                                ->required(),
+                                ->columnSpanFull(),
+
+
                         ])->columns(2),
                     Wizard\Step::make("Information de la Leçon")
                         ->description('Les informations consernant la leçon')
@@ -92,20 +103,13 @@ class LessonResource extends Resource
                                 ->required()
                                 ->native(False)
                                 ->columnSpan(6),
+                            Forms\Components\DateTimePicker::make('published_at')
+                                ->label('Publier le')
+                                ->native(False)
+                                ->required()
+                                ->columnSpanFull(),
                         ])->columns(12),
-                    Wizard\Step::make("Auteur")->schema([
-                        Forms\Components\Select::make('user_id')
-                            ->options([auth()->user()->id => auth()->user()->name])
-                            ->default(auth()->user()->id)
-                            ->label('Le Professeur')
-                            ->native(False)
-                            ->required(),
-
-                        Forms\Components\DateTimePicker::make('published_at')
-                            ->label('Publier le')
-                            ->native(False)
-                            ->required(),
-                    ])->columns(2),
+                    
                 ])
                     ->columnSpanFull(),
             ]);

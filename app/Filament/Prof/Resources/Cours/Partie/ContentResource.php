@@ -77,10 +77,10 @@ class ContentResource extends Resource
                                 ->hiddenOn(ContentsRelationManager::class)
                                 ->required(),
 
-                            Forms\Components\Select::make('user_id')
+                            /* Forms\Components\Select::make('user_id')
                                 ->options([auth()->user()->id => auth()->user()->name])
                                 ->default(auth()->user()->id)
-                                ->required(),
+                                ->required(), */
                             
                         ])->columns(2),
 

@@ -88,13 +88,14 @@ class EvaluationResource extends Resource
                         Forms\Components\TextInput::make('time')
                             ->required(),
 
-                        Forms\Components\Select::make('user_id')
-                            ->options([auth()->user()->id => auth()->user()->name])
-                            ->default(auth()->user()->id)
-                            ->required(),
                         Forms\Components\Select::make('statut_id')
                             ->relationship('statut', 'name')
-                            ->required(), 
+                            ->preload()
+                            ->searchable()
+                            ->native(False)
+                            ->label('Statut')
+                            ->required()
+                            ->columnSpanFull(), 
                         Forms\Components\Textarea::make('description')
                             ->columnSpanFull(),
 

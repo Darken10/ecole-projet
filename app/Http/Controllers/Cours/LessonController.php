@@ -200,12 +200,23 @@ class LessonController extends Controller
                     break;
             }
         }
-        $Soumition = Soumition::create([
-            'response'=>$data,
-            'note'=>$note,
-            'evaluation_id'=>$evaluation->id,
-            'user_id'=>auth()->user()->id,
-        ]);
+        $old_soumition = auth()->user()->soumitions()->where('evaluation_id',$evaluation->id)->get();
+        if(count($old_soumition)==0){
+            $Soumition = Soumition::create([
+                'response'=>$data,
+                'note'=>$note,
+                'evaluation_id'=>$evaluation->id,
+                'user_id'=>auth()->user()->id,
+            ]);
+        } else {
+            $Soumition = $old_soumition->last()->update([
+                'response'=>$data,
+                'note'=>$note,
+                'evaluation_id'=>$evaluation->id,
+                'user_id'=>auth()->user()->id,
+            ]);
+             
+        }
         
         return view('cours.evaluations.correction',[
             'soumition'=>$Soumition
@@ -231,5 +242,15 @@ class LessonController extends Controller
         return view('cours.evaluations.correction',[
             'soumition'=>$soumition
         ]);
+    }
+
+    function appreciation(Lesson $lesson,Request $request){
+        $lesson->addApreciation($request->input('apreciation'));
+        return back();
+    }
+
+    function like(Lesson $lesson){
+        $lesson->addLike();
+        return back();
     }
 }

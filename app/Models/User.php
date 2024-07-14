@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Models\Role;
+use App\Models\Statut;
 use App\Models\Cours\Niveau;
 use App\Models\Cours\Exercice;
 use App\Models\Cours\Response;
@@ -66,6 +67,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'date_naissance'=> 'datetime'
         ];
     }
 
@@ -74,6 +76,10 @@ class User extends Authenticatable
 
     function roles():BelongsToMany{
         return $this->belongsToMany(Role::class);
+    }
+
+    function statut():BelongsTo{
+        return $this->belongsTo(Statut::class);
     }
 
     function responses():HasMany{
@@ -127,4 +133,10 @@ class User extends Authenticatable
     function soumitions():HasMany{
         return $this->hasMany(Soumition::class);
     }
+
+    function hasRated(Lesson $lesson):bool{
+        $ok = count($lesson->users()->where('user_id',auth()->user()->id)->wherePivot('apreciation','!=',0)->get())>0;
+        return $ok;
+    }
+
 }

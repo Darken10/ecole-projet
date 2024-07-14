@@ -70,7 +70,7 @@ class Question extends Model
         return $nb;
     }
 
-    public function corrige_type_1(string $data):float{
+    public function corrige_type_1(string|null $data):float{
         $point = 0;
         foreach ($this->options as $option) {
             if(array_key_exists('text',$option) and $option['text']==$data){
@@ -110,7 +110,7 @@ class Question extends Model
         return $point > 0 ? $point :0 ;
     }
 
-    public function corrige_type_3(string $data):float{
+    public function corrige_type_3(string|null $data):float{
         $point = 0;
         if(array_key_exists('text',$this->options[0])){
             if(trim(strtolower($this->options[0]['text']))==trim(strtolower($data))){

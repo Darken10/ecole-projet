@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Chat\MessageController;
 use App\Http\Controllers\Cours\LessonController;
 use App\Http\Controllers\Cours\EvaluationController;
+use App\Http\Controllers\User\UserProfileController;
 use App\Http\Controllers\Admin\Classe\MatiereController;
 use App\Http\Controllers\Admin\Cours\AdminEvaluationController;
 
@@ -38,6 +39,8 @@ Route::prefix('/cours')->name('cours.')->middleware(['auth', 'verified'])->contr
     Route::get('/','index')->name('index');
     Route::get('/mes-cours','mes_cours')->name('mes_cours');
     Route::get('/{lesson}','show')->name('show');
+    Route::get('/{lesson}/like','like')->name('like');
+    Route::get('/{lesson}/appreciation','appreciation')->name('appreciation');
     Route::get('/{lesson}/suivre','suivre')->name('suivre');
     Route::get('/{lesson}/{content}/{numero}/suivre','sectionSuivante')->name('sectionSuivante');
     Route::get('/{lesson}/{content}/{numero}/arriere','sectionArriere')->name('sectionArriere');
@@ -64,6 +67,10 @@ Route::middleware('auth')->group(function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::prefix('/user')->controller(UserProfileController::class)->middleware('auth')->group(function () {
+    Route::get('/profile', 'profile')->name('user.profile');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

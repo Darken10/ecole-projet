@@ -32,7 +32,8 @@ class Lesson extends Model
         'lesson_numero',
         'image_uri',
         'published_at',
-        'description'
+        'description',
+        'niveau_evolution',
     ];
 
     function chapitre(): BelongsTo|null
@@ -123,9 +124,20 @@ class Lesson extends Model
 
     }
 
+    public function addLike(){
+        if (!$this->users()->where('user_id',auth()->user()->id)->exists())
+            return $this->users()->attach(auth()->user()->id,['apreciation'=>0, 'is_view'=>True, 'is_learned'=>True,'is_like'=>True,'niveau_evolution'=>0]);
+        $pivot = $this->users()->where('user_id',auth()->user()->id)->get()->last()->pivot;
+        $pivot->is_like=1;
+        $pivot->save();
+        $this->save();
+        return  True;
+
+    }
+
     public function addApreciation($appreciation){
         if (!$this->users()->where('user_id',auth()->user()->id)->exists())
-            return $this->users()->attach(auth()->user()->id,['apreciation'=>0, 'is_view'=>True, 'is_learned'=>True,'is_like'=>false]);
+            return $this->users()->attach(auth()->user()->id,['apreciation'=>0, 'is_view'=>True, 'is_learned'=>True,'is_like'=>false,'niveau_evolution'=>0]);
         $this->users()->where('user_id',auth()->user()->id)->pivot->apreciation=$appreciation;
         $this->save();
         $this->users()->where('user_id',auth()->user()->id)->pivot->save();
@@ -138,7 +150,6 @@ class Lesson extends Model
     }
 
     public function count_likes():int{
-        
         return count($this->users()->wherePivot('is_like',true)->get());
     }
 
@@ -157,12 +168,16 @@ class Lesson extends Model
     }
 
     public function niveau_evolution(){
-        dd($this->users()->withPivot(['niveau_evolution'])->where('user_id',auth()->user()->id)->get()->last());
+        return $this->users()->withPivot(['niveau_evolution'])->where('user_id',auth()->user()->id)->get()->last()->pivot_niveau_evolution;
     }
 
     public function passe_niveau(Content $content){
         
         //$this->
+    }
+
+    function is_like():bool{
+        return $this->users()->wherePivot('is_like',true)->where('user_id',auth()->user()->id)->get()->existes;
     }
 
 }

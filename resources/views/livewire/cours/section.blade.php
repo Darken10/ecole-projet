@@ -29,6 +29,6 @@
     @endif
 
     <div>
-        <x-cours.ratting />
+        <x-cours.ratting :lesson="$content->lesson" />
     </div>
 </div>

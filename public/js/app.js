@@ -1,3 +1,5 @@
+
+
 $(document).ready(function(){
 
 	// responsive nav
@@ -30,3 +32,5 @@ $(document).ready(function(){
 
 hljs.configure({tabReplace: '  '});
 hljs.initHighlightingOnLoad();
+
+document.getElementById("myForm").addClass('okokok')

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown Timer for Form Submission</title>
+<style>
+    .countdown {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="countdown" id="countdown"></div>
+
+<form id="myForm" action="submit.php" method="post">
+    <!-- Your form fields here -->
+    <input type="submit" value="Submit Form">
+</form>
+
+<script>
+// Function to start the countdown
+function startCountdown(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+            document.getElementById("myForm").submit(); // Submit the form when timer reaches 0
+        }
+    }, 1000);
+}
+
+// When the page is loaded
+document.addEventListener("DOMContentLoaded", function () {
+    var fiveMinutes =  0.3* 60, // Adjust the countdown time in seconds here
+        display = document.querySelector('#countdown');
+    startCountdown(fiveMinutes, display);
+});
+</script>
+
+</body>
+</html>

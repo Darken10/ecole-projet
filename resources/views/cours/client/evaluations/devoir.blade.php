@@ -38,7 +38,7 @@
         </div>
     </div>
     <div class="bg-white border shadow-md px-4 py-2 mx-4 my-4">
-        <form method="POST" action="{{ route('cours.soumettre',$evaluation) }}">
+        <form id="myForm" method="POST" action="{{ route('cours.soumettre',$evaluation) }}">
             @csrf
             @forelse ($evaluation->questions as $question)
                 <div class=" border-b-2 pb-4">
@@ -78,19 +78,41 @@
     <div id="temps" class=" bg-white text-gray-900 font-semibold px-8 py-4 fixed bottom-4 right-4 text-3xl shadow-xl font-mono rounded-lg border-2 border-gray-700 ">
         
     </div>
+
     <script>
-        const temps = document.querySelector('#temps')
-        //const date = new Date();
-        const tab = @js($evaluation->time).toString().split(':')
-        const time = new Date(0,0,0,tab[0],tab[1],tab[2])
-        const debut = new Date();
-        let fin = new Date();
-        fin.setHours(debut.getHours()+Number.parseInt(tab[0]),debut.getMinutes()+Number.parseInt(tab[1]),debut.getSeconds()+Number.parseInt(tab[2]))
-        const dateHeure = document.querySelector('#date-heure')
-        setInterval(() => {
-            temps.textContent = (new Date).toLocaleTimeString()
+    // Function to start the countdown
+    function startCountdown(duration, display) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            heures = parseInt(timer / 3600, 10);
+            minutes = parseInt((timer % 3600)/60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            heures = heures < 10 ? "0" + heures : heures;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            
+
+            display.textContent = heures + ':' + minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                timer = 0;
+                document.getElementById("myForm").submit(); // Submit the form when timer reaches 0
+            }
         }, 1000);
-        console.log(debut,fin);
+    }
+
+    // When the page is loaded
+    document.addEventListener("DOMContentLoaded", function () {
+        const t = @js($evaluation->time).toString().split(':')
+        const h = parseInt(t[0], 10);
+        const m = parseInt(t[1], 10);
+        const s = parseInt(t[2], 10);
+        var fiveMinutes =  h*3600+m*60+s, // Adjust the countdown time in seconds here
+            display = document.querySelector('#temps');
+        startCountdown(fiveMinutes, display);
+    });
+    
     </script>
 @endif
 @endsection

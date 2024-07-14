@@ -49,17 +49,22 @@
                                     @foreach ($question->options as $option_id=>$option)                                   
                                             <tr>
                                                 <td class="px-1">
-                                                    @if ($soumition->response["question_{$question->id}"]==$option['text'] and $option['is_correct'] )
-                                                        @php
-                                                            $justification = $option['justification']
-                                                        @endphp
-                                                        <img src="{{ asset('icone/true_response.png') }}" class="w-6 h-6" >
-                                                    @elseif (($soumition->response["question_{$question->id}"]==$option['text'] and !$option['is_correct']) or ($soumition->response["question_{$question->id}"]!=$option['text'] and $option['is_correct']))
-                                                        <img src="{{ asset('icone/false_response.png') }}" class="w-6 h-6" alt="" srcset="">
+                                                    @if (array_key_exists("question_{$question->id}",$soumition->response))
+                                                        @if ($soumition->response["question_{$question->id}"]==$option['text'] and $option['is_correct'] )
+                                                            @php
+                                                                $justification = $option['justification']
+                                                            @endphp
+                                                            <img src="{{ asset('icone/true_response.png') }}" class="w-6 h-6" >
+                                                        @elseif (($soumition->response["question_{$question->id}"]==$option['text'] and !$option['is_correct']) or ($soumition->response["question_{$question->id}"]!=$option['text'] and $option['is_correct']))
+                                                            <img src="{{ asset('icone/false_response.png') }}" class="w-6 h-6" >
+                                                        @endif
+                                                    @elseif ($option['is_correct'])
+                                                        <img src="{{ asset('icone/false_response.png') }}" class="w-6 h-6" >
                                                     @endif
+                                                    
                                                 </td>
                                                 <td class="px-1">
-                                                    <input type="radio"  id="option_{{ $option_id }}" disabled @checked($soumition->response["question_{$question->id}"]==$option['text']) >
+                                                    <input type="radio"  id="option_{{ $option_id }}" disabled @checked(array_key_exists("question_{$question->id}",$soumition->response) and $soumition->response["question_{$question->id}"]==$option['text']) >
                                                     <label for="option_{{ $option_id }}">{{ $option['text'] }}</label>
                                                 </td>
                                             </tr>
@@ -70,30 +75,36 @@
                                 @foreach ($question->options as $option)
                                     <tr>
                                         <td class="px-1">
-                                            @php
-                                                $good = null;
-                                                $cochet = False;
-                                                foreach ($soumition->response["question_{$question->id}"] as $item) {
-                                                    
-                                                    if ($item == $option['text']) {
-                                                        $cochet = True;
-                                                        $good = $option['is_correct'] ? True : False;
-                                                    }
-                                                }
-                                            @endphp
-                                            @if ($good==True)
+                                            @if (array_key_exists("question_{$question->id}",$soumition->response))
                                                 @php
-                                                    $justification = $option['justification']
+                                                    $good = null;
+                                                    $cochet = False;
+                                                    foreach ($soumition->response["question_{$question->id}"] as $item) {
+                                                        
+                                                        if ($item == $option['text']) {
+                                                            $cochet = True;
+                                                            $good = $option['is_correct'] ? True : False;
+                                                        }
+                                                    }
                                                 @endphp
-                                                <img src="{{ asset('icone/true_response.png') }}" class="w-6 h-6" >
-                                            @elseif ($good==null and $option['text'])
-                                                <img src="{{ asset('icone/false_response.png') }}" class="w-6 h-6" alt="" srcset="">
-                                            @else
+                                                @if ($good==True)
+                                                    @php
+                                                        $justification = $option['justification']
+                                                    @endphp
+                                                    <img src="{{ asset('icone/true_response.png') }}" class="w-6 h-6" >
+                                                @elseif ($good==null and $option['text'])
+                                                    <img src="{{ asset('icone/false_response.png') }}" class="w-6 h-6" alt="" srcset="">
+                                                @else
+                                                    <img src="{{ asset('icone/false_response.png') }}" class="w-6 h-6" alt="" srcset="">
+                                                @endif
+
+                                            @elseif ($option['is_correct'])
                                                 <img src="{{ asset('icone/false_response.png') }}" class="w-6 h-6" alt="" srcset="">
                                             @endif
+                                            
                                         </td>
                                         <td class="px-1">
-                                            <input type="checkbox"  id="option_{{ $option_id }}" @checked($cochet)  >
+                                            <input type="checkbox"  id="option_{{ $option_id }}" @checked($cochet ?? null)  >
                                             <label for="option_{{ $option_id }}">{{ $option['text'] }}</label>
                                         </td> 
                                     </tr>
@@ -102,18 +113,22 @@
                             @case(3)
                                     <tr>
                                         <td class="px-1">
+                                            @if (array_key_exists("question_{$question->id}",$soumition->response))
                                                 @php
                                                     $justification = $question->options[0]['justification']
                                                 @endphp
-                                            @if ($soumition->response["question_{$question->id}"] == $question->options[0]['text'])
-                                                
-                                                <img src="{{ asset('icone/true_response.png') }}" class="w-6 h-6" >
+                                                @if ($soumition->response["question_{$question->id}"] == $question->options[0]['text'])
+                                                    <img src="{{ asset('icone/true_response.png') }}" class="w-6 h-6" >
+                                                @else
+                                                    <img src="{{ asset('icone/false_response.png') }}" class="w-6 h-6" alt="" srcset="">
+                                                @endif 
                                             @else
-                                                <img src="{{ asset('icone/false_response.png') }}" class="w-6 h-6" alt="" srcset="">
+                                                <img src="{{ asset('icone/false_response.png') }}" class="w-6 h-6" alt="" srcset=""> 
                                             @endif
+                                            
                                         </td>
                                         <td class="px-1">
-                                            <x-textarea-input >{{ $soumition->response["question_{$question->id}"] }}</x-textarea-input>
+                                            <x-textarea-input >{{ $soumition->response["question_{$question->id}"] ?? '' }}</x-textarea-input>
                                         </td>
                                     </tr>
                                 @break                        
@@ -136,5 +151,6 @@
             <span>{{ $soumition->note }} sur {{ $soumition->evaluation->note_max() }}</span>
         </div>
     </div>
+
 
 @endsection

@@ -6,16 +6,16 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class role
+class StatutAbonenment
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next,string $role): Response
+    public function handle(Request $request, Closure $next): Response
     {
-        if($request->user()->roles()->where('name',$role)->exists() or $request->user()->roles()->where('name','root')->exists()) 
+        if($request->user()->payment()->where('montant','>',150)->exists()) 
             return $next($request);
         
         abort(403,"Desole vous n'avez pas acès a cette page");

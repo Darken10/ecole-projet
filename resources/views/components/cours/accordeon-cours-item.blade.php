@@ -1,7 +1,7 @@
 @props(['chapitre'])
 
 @foreach ($chapitre?->lessons as $lesson)
-    @if (count($lesson->contents)>0)
+    @if (count($lesson->contents)>0 and $lesson->chapitre->niveau->id == auth()->user()->niveau_id)
         <div class="w-full  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <a href="#">
                 <img class="rounded-t-lg" src="{{ asset('images/posts/img_10.jpg') }}" alt="product image" />

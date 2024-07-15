@@ -27,7 +27,12 @@ class ProfPanelProvider extends PanelProvider
             ->id('prof')
             ->path('prof')
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Indigo,
+                'danger'=> Color::Slate,
+                'gray'=> Color::Gray,
+                'info'=>Color::Blue,
+                'success'=>Color::Emerald,
+                'warning'=>Color::Orange,
             ])
             ->discoverResources(in: app_path('Filament/Prof/Resources'), for: 'App\\Filament\\Prof\\Resources')
             ->discoverPages(in: app_path('Filament/Prof/Pages'), for: 'App\\Filament\\Prof\\Pages')

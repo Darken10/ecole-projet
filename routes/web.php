@@ -7,6 +7,7 @@ use App\Models\Cours\Partie\Lesson;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\ClasseController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Chat\MessageController;
 use App\Http\Controllers\Cours\LessonController;
@@ -16,21 +17,14 @@ use App\Http\Controllers\User\UserProfileController;
 use App\Http\Controllers\Admin\Classe\MatiereController;
 use App\Http\Controllers\Admin\Cours\AdminEvaluationController;
 
-//Route::resource('/eleve',EleveController::class)->except(['show','edit','create'])->middleware('auth');
 
-// Administrateur 
-/*Route::prefix('/admin')->group(function () {
-    Route::resource('matiere',MatiereController::class);
-    Route::resource('users',ClasseController::class);
-});
-*/
 //
-Route::prefix('/prof')->middleware(['auth', 'verified'])->name('prof.')->group(function () {
+/* Route::prefix('/prof')->middleware(['auth', 'verified'])->name('prof.')->group(function () {
     Route::resource('evaluations',AdminEvaluationController::class)->except(['show','store','create']);
     Route::get('evaluations/{lesson}',[AdminEvaluationController::class,'create'])->name('evaluations.create');
     Route::post('evaluations/{lesson}',[AdminEvaluationController::class,'store'])->name('evaluations.store');
 });
-
+ */
 // Client
 Route::get('/', function () {
     return view('welcome');
@@ -54,9 +48,9 @@ Route::prefix('/cours')->name('cours.')->middleware(['auth', 'verified'])->contr
 });
 
 Route::get('/test',function(){
-    $lesson  = Lesson::find(3);
+    //$lesson  = Lesson::find(3);
     //dd();
-});
+})->middleware(['auth', 'verified']);
 
 
 Route::middleware('auth')->group(function () {
@@ -89,22 +83,13 @@ Route::middleware('auth')->group(function () {
 Route::prefix('/conversations')->name('chat.')->middleware(['auth', 'verified'])->controller(MessageController::class)->middleware(['auth',])->group(function (){
     Route::get('/','index')->name('index');
     Route::get('/user/{user}','show')->name('show')
-    //->middleware('can:talkTo,user')
     ->where([
         'user'=>'[0-9]+',
     ]);
-    Route::post('/user/{user}','store')->name('store')
-    //->middleware('can:talkTo,user')
-    ->where([
+    Route::post('/user/{user}','store')->name('store')->where([
         'user'=>'[0-9]+',
     ]);
 
-    /*Route::get('/compagnie/{compagnie}','compagnieShow')->name('compagnieShow')->where([
-        'compagnie'=>'[0-9]+',
-    ]);
-    Route::post('/compagnie/{compagnie}','compagnieStore')->where([
-        'compagnie'=>'[0-9]+',
-    ]);*/
 });
 
 
@@ -118,6 +103,14 @@ Route::get('callback/google',function (){
     $user = Socialite::driver('google')->user();
     dd($user);
 });
+
+Route::prefix('/payment')->controller(PaymentController::class)->name('payment.')->group(function (){
+    Route::get('/','lancer_payment')->name('payment');
+    Route::get('/return_url','return_function')->name('return_url');
+    Route::get('/cancel_url','cancel_function')->name('cancel_url');
+    Route::get('/callback_url','callback_function')->name('callback_url');
+});
+
 
 
 

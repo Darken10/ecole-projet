@@ -5,6 +5,7 @@ namespace App\Models\Cours\Partie;
 use App\Models\User;
 use App\Models\Statut;
 use App\Models\Matiere;
+use App\Models\Cours\Comment;
 use App\Models\Cours\Evaluation;
 use Illuminate\Support\Collection;
 use App\Models\Cours\Partie\Content;
@@ -181,11 +182,13 @@ class Lesson extends Model
     }
 
     public static function all_my_niveau_matieres(){
-        /*  return Content::all() ;
-        filter(fn ($lesson)=>$lesson->has('contents') )
-        filter(fn($chapitre)=>$chapitre?->lessons) */
+
         $matieres = auth()->user()->niveau->matieres->filter(fn($matiere)=>$matiere->chapitres()->exists());
-        return ($matieres->filter(fn ($matiere)=>$matiere->chapitres?->filter(fn ($chapitre) => $chapitre->lessons()->exists())));
+        return $matieres;//->filter(fn ($matiere)=>$matiere->chapitres?->filter(fn ($chapitre) => $chapitre->lessons()->exists())));
+    }
+
+    function comments():HasMany{
+        return $this->hasMany(Comment::class);
     }
 
 }

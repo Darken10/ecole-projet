@@ -6,7 +6,9 @@ namespace App\Models;
 
 use App\Models\Role;
 use App\Models\Statut;
+use App\Models\Payment;
 use App\Models\Cours\Niveau;
+use App\Models\Cours\Comment;
 use App\Models\Cours\Exercice;
 use App\Models\Cours\Response;
 use App\Models\Cours\Soumition;
@@ -14,10 +16,12 @@ use App\Models\Cours\Evaluation;
 use App\Models\Cours\Soumission;
 use App\Models\Cours\Partie\Lesson;
 use App\Models\Cours\Partie\Content;
+use App\Models\cours\CommentResponse;
 use App\Models\Cours\EvaluationsTraiter;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Cours\Partie\UserQuestion;
 use App\Models\Cours\Partie\UserQuestionResponse;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -137,6 +141,22 @@ class User extends Authenticatable
     function hasRated(Lesson $lesson):bool{
         $ok = count($lesson->users()->where('user_id',auth()->user()->id)->wherePivot('apreciation','!=',0)->get())>0;
         return $ok;
+    }
+
+    function payment():HasOne{
+        return $this->hasOne(Payment::class);
+    }
+
+    function comments():HasMany{
+        return $this->hasMany(Comment::class);
+    }
+
+    function commentResponses():HasMany{
+        return $this->hasMany(CommentResponse::class);
+    }
+
+    function user_likes():BelongsToMany{
+        return $this->belongsToMany(Comment::class);
     }
 
 }

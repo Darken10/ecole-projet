@@ -4,6 +4,8 @@ use Illuminate\Foundation\Application;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use App\Http\Middleware\PreniumAbonnementMiddleware;
+use App\Http\Middleware\StandardAbonnementMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -15,6 +17,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         return [
             'role' => RoleMiddleware::class,
+            'standard'=> StandardAbonnementMiddleware::class,
+            'prenium'=> PreniumAbonnementMiddleware::class,
         ];
     })
     ->withExceptions(function (Exceptions $exceptions) {

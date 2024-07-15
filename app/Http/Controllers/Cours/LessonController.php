@@ -24,9 +24,11 @@ class LessonController extends Controller
     function index()
     {
         $matieres = Lesson::all_my_niveau_matieres();
-        //dd($matieres);
+
+        $lessons_order = Lesson::all()->filter(fn ($lesson)=> $lesson->chapitre?->niveau_id==auth()->user()->niveau_id)->filter(fn ($lesson)=>count($lesson->users()->wherePivot('apreciation','>',0)->withPivot('apreciation')->get())>0);
         return view('cours.client.lesson.index', [
-            'matieres' => $matieres
+            'matieres' => $matieres,
+            'lessons_order' => $lessons_order
         ]);
     }
 
@@ -198,7 +200,9 @@ class LessonController extends Controller
                     break;
             }
         }
-        $old_soumition = auth()->user()->soumitions()->where('evaluation_id',$evaluation->id)->get();
+        /** @var User $user description */
+        $user = auth()->user();
+        $old_soumition = $user->soumitions()->where('evaluation_id',$evaluation->id)->get();
         if(count($old_soumition)==0){
             $Soumition = Soumition::create([
                 'response'=>$data,
@@ -251,4 +255,6 @@ class LessonController extends Controller
         $lesson->addLike();
         return back();
     }
+
+
 }

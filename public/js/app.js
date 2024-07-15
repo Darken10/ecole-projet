@@ -32,5 +32,12 @@ $(document).ready(function(){
 
 hljs.configure({tabReplace: '  '});
 hljs.initHighlightingOnLoad();
+const a = document.getElementById("myForm")
+document.getElementById("myForm").addEventListener('click',function (e){
+	a.setAttribute('class','show')
 
-document.getElementById("myForm").addClass('okokok')
+	a.removeAttribute('')
+	
+		
+})
+

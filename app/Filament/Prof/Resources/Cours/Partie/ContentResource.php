@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Prof\Resources\Cours\Partie\ContentResource\Pages;
 use App\Filament\Prof\Resources\Cours\Partie\ContentResource\RelationManagers;
 use App\Filament\Prof\Resources\LessonResource\RelationManagers\ContentsRelationManager;
+use App\Filament\Prof\Resources\ContentResource\RelationManagers\PieceJointsRelationManager;
 
 class ContentResource extends Resource
 {
@@ -177,7 +178,7 @@ class ContentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            PieceJointsRelationManager::class
         ];
     }
 

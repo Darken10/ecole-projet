@@ -26,26 +26,8 @@ use App\Http\Controllers\Admin\Cours\AdminEvaluationController;
 });
  */
 // Client
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::prefix('/cours')->name('cours.')->middleware(['auth', 'verified'])->controller(LessonController::class)->group(function (){
-    Route::get('/','index')->name('index');
-    Route::get('/mes-cours','mes_cours')->name('mes_cours');
-    Route::get('/{lesson}','show')->name('show');
-    Route::get('/{lesson}/like','like')->name('like');
-    Route::get('/{lesson}/appreciation','appreciation')->name('appreciation');
-    Route::get('/{lesson}/suivre','suivre')->name('suivre');
-    Route::get('/{lesson}/{content}/{numero}/suivre','sectionSuivante')->name('sectionSuivante');
-    Route::get('/{lesson}/{content}/{numero}/arriere','sectionArriere')->name('sectionArriere');
-    Route::post('/{lesson}/question','user_question')->name('user_question');
-    Route::post('/{exercice}/correction','exercice_corretion')->name('exercice_corretion');
-    Route::get('/{lesson}/evaluation','evaluations_list')->name('evaluation.list');
-    Route::get('/{evaluation}/faire-evaluation','evaluation')->name('evaluation');
-    Route::post('/{evaluation}/evaluation','soumettre')->name('soumettre');
-    Route::get('/{evaluation}/evaluation/show','evaluation_voir')->name('evaluation_voir');
-});
+
 
 Route::get('/test',function(){
     //$lesson  = Lesson::find(3);
@@ -68,6 +50,7 @@ Route::get('/contact',[ContactController::class,'contact'])->name('contact.conta
 
 Route::prefix('/user')->controller(UserProfileController::class)->middleware('auth')->group(function () {
     Route::get('/profile', 'profile')->name('user.profile');
+    Route::get('/profile/{user}',  'prof_profile')->name('user.profile.prof_profile');
     Route::get('/profile/reset-password',  'reset_password')->name('user.profile.reset-password');
 
 });
@@ -112,6 +95,22 @@ Route::prefix('/payment')->controller(PaymentController::class)->name('payment.'
 });
 
 
+Route::prefix('/')->name('cours.')->middleware(['auth', 'verified'])->controller(LessonController::class)->group(function (){
+    Route::get('/','index')->name('index');
+    Route::get('/mes-cours','mes_cours')->name('mes_cours');
+    Route::get('/{lesson}','show')->name('show');
+    Route::get('/{lesson}/like','like')->name('like');
+    Route::get('/{lesson}/appreciation','appreciation')->name('appreciation');
+    Route::get('/{lesson}/suivre','suivre')->name('suivre');
+    Route::get('/{lesson}/{content}/{numero}/suivre','sectionSuivante')->name('sectionSuivante');
+    Route::get('/{lesson}/{content}/{numero}/arriere','sectionArriere')->name('sectionArriere');
+    Route::post('/{lesson}/question','user_question')->name('user_question');
+    Route::post('/{exercice}/correction','exercice_corretion')->name('exercice_corretion');
+    Route::get('/{lesson}/evaluation','evaluations_list')->name('evaluation.list');
+    Route::get('/{evaluation}/faire-evaluation','evaluation')->name('evaluation');
+    Route::post('/{evaluation}/evaluation','soumettre')->name('soumettre');
+    Route::get('/{evaluation}/evaluation/show','evaluation_voir')->name('evaluation_voir');
+});
 
 
 

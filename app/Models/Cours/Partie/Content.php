@@ -31,7 +31,7 @@ class Content extends Model
 
     use HasFactory;
 
-    function piece_joint(): HasMany
+    function piece_joints(): HasMany
     {
         return $this->hasMany(PieceJoint::class);
     }
@@ -41,15 +41,15 @@ class Content extends Model
         return $this->belongsTo(Lesson::class);
     }
 
-    /*function matiere(): BelongsTo
+    /* function matiere()
     {
-        return $this->belongsTo(Matiere::class);
+        return $this->lesson->chapitre->matiere;
     }
 
-    function niveau(): BelongsTo
+    function niveau()
     {
-        return $this->belongsTo(Niveau::class);
-    }*/
+        return $this->lesson->chapitre->niveau;
+    } */
 
     function user():BelongsTo{
         return $this->belongsTo(User::class);

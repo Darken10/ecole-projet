@@ -17,10 +17,10 @@
                <span class="text-sm font-normal text-gray-500 dark:text-gray-400">{{ $message->created_at->diffForHumans() }}</span>
             </div>
         </div>
-        <img class="w-8 h-8 rounded-full" src="{{ asset($message->from->profile_uri ?? 'images/user1.png') }}" alt="Jese image">
+        <img class="w-8 h-8 rounded-full" src="{{ asset($message->from->profile_uri ? 'storage/'.$message->from->profile_uri : 'images/user1.png') }}" alt="Jese image">
     @else
     
-        <img class="w-8 h-8 rounded-full" src="{{ asset($message->from->profile_uri ?? 'images/user1.png') }}" alt="Jese image">
+        <img class="w-8 h-8 rounded-full" src="{{ asset($message->from->profile_uri ? 'storage/'.$message->from->profile_uri : 'images/user1.png') }}" alt="Jese image">
         <div class="flex flex-col  max-w-[480px] leading-1.5 p-4 border-gray-300 bg-gray-200 rounded-e-xl rounded-es-xl dark:bg-gray-700">
             <div class="flex items-center space-x-2 rtl:space-x-reverse">
                 <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ $message->from->name }}</span>

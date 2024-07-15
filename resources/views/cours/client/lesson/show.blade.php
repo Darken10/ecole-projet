@@ -4,7 +4,7 @@
 
 @section('content')
     <div class=" w-full bg-white text-gray-900 m-4 my-8 p-4 ">
-        <div class=" mx-auto justify-center h-full  md:text-3xl sm:text-2xl" style=" opacity: 1; background-image: url({{ asset('images/posts/img_1.jpg') }});">
+        <div class=" mx-auto justify-center h-full  md:text-3xl sm:text-2xl" style=" opacity: 1; background-image: url({{ asset( $lesson->image_uri ? 'storage/'.$lesson->image_uri : 'images/matiere-default.jpeg') }});">
             <div class=" md:text-3xl sm:text-2xl lg:text-6xl gap-8 font-bold items-center text-center h-full py-40">
                 <span class="py-4">{{ $lesson->chapitre->matiere->name }}</span> <br>
                 <span class="py-4">{{ $lesson->title }}  </span>

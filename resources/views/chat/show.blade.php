@@ -28,7 +28,7 @@
         <div class="  block border border-gray-400 bg-white rounded-md ml-4 w-full">
             <div class=" items-center flex gap-4 bg-gray-500 rounded-md w-full text-white">
                 <div class=" mx-4 flex-shrink-0">
-                    <img class="w-8 h-8 rounded-full" src=" {{ asset($u->profile_uri ?? 'images/user1.png') }}" alt="Neil image">
+                    <img class="w-8 h-8 rounded-full" src=" {{ asset($user->profile_uri ? 'storage/'.$user->profile_uri : 'images/user1.png') }}" alt="Neil image">
                  </div>
                 <div >
                     <span class=" font-bold py-2 px-4 w-full ">
@@ -47,7 +47,12 @@
                 </div>
                 
                 @empty
-                    <div>AUCUNE CONVERSATION</div>
+                    <x-aucun class=" font-bold ">
+                        <div class="block text-center">
+                            <img src="{{ asset('icone/chat-round-dots-svgrepo-com.svg') }}" alt="" srcset="" class=" max-w-32 mx-auto ">
+                            <p>Aucune Conversation</p>
+                        </div>
+                    </x-aucun>
                 @endforelse
             </div>
             <div>

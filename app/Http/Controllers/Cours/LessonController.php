@@ -35,15 +35,19 @@ class LessonController extends Controller
     function show(Lesson $lesson)
     {
         $lesson->addView();
-        if ($lesson->users()->where('user_id', auth()->user()->id)->exists()) {
-            return to_route('cours.suivre', [
+        if(auth()->user()->payment->exists() and auth()->user()->payment->statut=="completed" ){
+            if ($lesson->users()->where('user_id', auth()->user()->id)->exists()) {
+                return to_route('cours.suivre', [
+                    'lesson' => $lesson
+                ]);
+            }
+            return view('cours.client.lesson.show', [
                 'lesson' => $lesson
             ]);
         }
-
-        return view('cours.client.lesson.show', [
-            'lesson' => $lesson
-        ]);
+        else{
+            return view('payment.index');
+        }
     }
 
     function suivre(Lesson $lesson)

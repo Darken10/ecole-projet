@@ -8,6 +8,9 @@
     <div>
         {!! $content->content !!}
     </div>
+    <div>
+        <x-cours.piece_joint :$content/>
+    </div>
     
     <div class="my-8 border-t-2 py-4">
         @foreach ($content->exercices as $exo)

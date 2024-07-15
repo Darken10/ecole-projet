@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Seeder;
 use App\Models\Cours\TypePieceJoint;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 
 class TypePieceJointSeeder extends Seeder
 {
@@ -13,7 +13,7 @@ class TypePieceJointSeeder extends Seeder
      */
     public function run(): void
     {
-        $data = ['image','video','video_link','pdf','doc','audio','link'];
+        $data = ['image','video','document','audio'];
 
         foreach ($data as $type) {
             TypePieceJoint::create([
